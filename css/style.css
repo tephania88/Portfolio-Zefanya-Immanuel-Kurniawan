@@ -182,3 +182,16 @@ code{background:var(--surface);padding:.1em .4em;border-radius:6px;font-size:.9e
 .ba-tag.l{left:10px}.ba-tag.r{right:10px;background:var(--accent);color:var(--accent-ink)}
 .ba-range{width:100%;margin:14px 0;accent-color:var(--accent)}
 .ba-notes{padding-left:18px;color:var(--muted);font-size:.9rem;display:grid;gap:4px}
+
+/* ===== Cover bergambar untuk kartu simulasi ===== */
+.card-img{position:relative}
+.card-img.sim-cta:has(img){background:#111}
+.card-img.sim-cta img{object-fit:cover;transition:transform .6s}
+.card:hover .card-img.sim-cta img{transform:scale(1.05)}
+.play-badge{position:absolute;right:12px;bottom:12px;background:var(--accent);color:var(--accent-ink);font-family:var(--body);font-weight:600;font-size:.8rem;padding:7px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .3s}
+.card:hover .play-badge{transform:scale(1.08)}
+
+/* Tautan proyek di dalam lightbox (gambar tidak membawa hyperlink) */
+.lb-links{position:absolute;top:18px;left:18px;display:flex;gap:10px;flex-wrap:wrap;z-index:2}
+.lb-links a{background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:.85rem;padding:8px 16px;border-radius:999px}
+.lb-links a:hover{filter:brightness(1.1)}
