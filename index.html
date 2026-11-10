@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zefanya Immanuel Kurniawan — Portfolio</title>
-  <meta name="description" content="Portfolio Zefanya Immanuel Kurniawan: project, skill, dan pengalaman.">
+  <title>Zefanya Immanuel Kurniawan — Learning & Development Portfolio</title>
+  <meta name="description" content="Portfolio Zefanya Immanuel Kurniawan: Learning & Development, Instructional Design, dan E-Learning Development.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -18,8 +18,9 @@
     <a href="#home" class="logo">ZIK<span>.</span></a>
     <nav>
       <a href="#about">Tentang</a>
-      <a href="#skills">Skill</a>
       <a href="#projects">Project</a>
+      <a href="#experience">Pengalaman</a>
+      <a href="#skills">Skill</a>
       <a href="#contact">Kontak</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">◐</button>
@@ -27,13 +28,13 @@
 
   <main>
     <section class="hero" id="home">
-      <p class="eyebrow reveal">Halo, saya</p>
+      <p class="eyebrow reveal">Learning &amp; Development · Instructional Design</p>
       <h1 class="hero-title">
         <span class="line"><span class="word">Zefanya</span></span>
         <span class="line"><span class="word">Immanuel</span></span>
         <span class="line"><span class="word accent">Kurniawan</span></span>
       </h1>
-      <p class="hero-sub reveal">[Profesi Anda] — membangun hal bermanfaat dan membuatnya enak dipakai.</p>
+      <p class="hero-sub reveal">Lulusan Teknologi Pendidikan yang merancang pengalaman belajar digital yang interaktif, jelas, dan enak diikuti.</p>
       <div class="hero-cta reveal">
         <a href="#projects" class="btn magnetic">Lihat project</a>
         <a href="#contact" class="btn ghost magnetic">Hubungi saya</a>
@@ -44,41 +45,96 @@
     <section class="section" id="about">
       <h2 class="section-title reveal">Tentang saya</h2>
       <div class="about-grid">
-        <p class="lead reveal">Ganti teks ini dengan perkenalan singkat Anda: latar belakang, apa yang Anda kerjakan, dan apa yang Anda cari.</p>
-        <div class="stats">
-          <div class="stat reveal"><b data-count="3">0</b><span>Tahun pengalaman</span></div>
-          <div class="stat reveal"><b data-count="10">0</b><span>Project selesai</span></div>
-          <div class="stat reveal"><b data-count="5">0</b><span>Sertifikasi</span></div>
+        <div>
+          <p class="lead reveal">Saya lulusan Teknologi Pendidikan Universitas Negeri Jakarta dengan minat besar pada Learning &amp; Development, Instructional Design, dan solusi pembelajaran digital.</p>
+          <p class="muted-text reveal">Saya berpengalaman membuat modul e-learning, materi pelatihan, dan mengelola konten pembelajaran di PT Trakindo Utama dan BTPN Syariah, dari storyboard sampai modul SCORM interaktif.</p>
         </div>
+        <div class="stats">
+          <div class="stat reveal"><b data-count="3.85" data-dec="2">0</b><span>IPK, Teknologi Pendidikan UNJ</span></div>
+          <div class="stat reveal"><b data-count="8">0</b><span>Modul HR interaktif di Trakindo</span></div>
+          <div class="stat reveal"><b data-count="100" data-suffix="+">0</b><span>Slide interaktif dikembangkan</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <h2 class="section-title reveal">Project pilihan</h2>
+      <p class="muted reveal">Klik gambar untuk melihat galeri. Daftar ini diperbarui otomatis dari <code>projects.json</code> dan GitHub.</p>
+      <div class="grid" id="projectGrid"></div>
+    </section>
+
+    <section class="section" id="experience">
+      <h2 class="section-title reveal">Pengalaman</h2>
+      <div class="timeline">
+        <article class="tl-item reveal">
+          <span class="tl-date">Aug 2026 — sekarang</span>
+          <h3>Learning System and Analytics <small>· Magang</small></h3>
+          <p class="tl-org">PT Trakindo Utama, Jakarta</p>
+          <ul>
+            <li>Mengembangkan modul e-learning pelatihan teknisi dan mengubah modul lama menjadi format digital interaktif dengan Articulate 360 (Rise dan Storyline) dan Canva.</li>
+            <li>Mengonversi presentasi PowerPoint menjadi modul SCORM 1.2 interaktif dengan template korporat.</li>
+            <li>Menyusun storyboard, mereview courseware, dan menerapkan variabel, trigger, serta state kustom untuk interaksi dua arah.</li>
+            <li>Berkontribusi pada redesain UI/UX situs web perusahaan.</li>
+          </ul>
+        </article>
+        <article class="tl-item reveal">
+          <span class="tl-date">Jul 2025 — Jan 2026</span>
+          <h3>Learning Specialist <small>· Magang</small></h3>
+          <p class="tl-org">BTPN Syariah, Jakarta</p>
+          <ul>
+            <li>Membuat video edukasi singkat untuk media sosial: menulis naskah, merekam, mendesain cover, dan tampil sebagai talent.</li>
+            <li>Meredesain presentasi pelatihan korporat dan menyusun infografis, flyer, serta modul pelatihan.</li>
+            <li>Membantu menata materi pembelajaran di Learning Management System (LMS).</li>
+          </ul>
+        </article>
+        <article class="tl-item reveal">
+          <span class="tl-date">Jun — Okt 2023</span>
+          <h3>Teaching Assistant <small>· Paruh waktu</small></h3>
+          <p class="tl-org">TK KSPA UNJ, Jakarta</p>
+          <ul><li>Mendampingi guru utama dalam pendampingan akademik, pengelolaan kelas, dan asesmen siswa.</li></ul>
+        </article>
+        <article class="tl-item reveal">
+          <span class="tl-date">2022 — Jan 2026</span>
+          <h3>S1 Teknologi Pendidikan</h3>
+          <p class="tl-org">Universitas Negeri Jakarta · IPK 3.85</p>
+          <ul><li>Skripsi: mengembangkan dan memvalidasi instrumen evaluasi digital untuk video microlearning edukatif di Instagram berdasarkan prinsip desain pesan.</li></ul>
+        </article>
       </div>
     </section>
 
     <section class="section" id="skills">
       <h2 class="section-title reveal">Skill</h2>
-      <div class="chips">
-        <span class="chip reveal">Skill 1</span><span class="chip reveal">Skill 2</span>
-        <span class="chip reveal">Skill 3</span><span class="chip reveal">Skill 4</span>
-        <span class="chip reveal">Skill 5</span><span class="chip reveal">Skill 6</span>
+      <div class="skill-groups">
+        <div class="skill-group reveal"><h3>Instructional Design &amp; E-Learning</h3>
+          <div class="chips"><span class="chip">Articulate 360 (Storyline &amp; Rise)</span><span class="chip">SCORM 1.2</span><span class="chip">Kotobee Author</span><span class="chip">LMS Content Development</span><span class="chip">Learning Needs Analysis</span><span class="chip">Storyboarding</span></div></div>
+        <div class="skill-group reveal"><h3>Desain &amp; Multimedia</h3>
+          <div class="chips"><span class="chip">Graphic Design</span><span class="chip">Infografis Vektor</span><span class="chip">Animated GIF</span><span class="chip">Premiere Pro</span><span class="chip">CapCut</span><span class="chip">OBS</span><span class="chip">Figma</span><span class="chip">Canva</span></div></div>
+        <div class="skill-group reveal"><h3>Metodologi</h3>
+          <div class="chips"><span class="chip">Message Design Principles</span><span class="chip">Golden Ratio Typography</span><span class="chip">Instrumen Evaluasi Digital</span><span class="chip">Evaluasi Media</span></div></div>
+        <div class="skill-group reveal"><h3>Produktivitas &amp; Bahasa</h3>
+          <div class="chips"><span class="chip">Microsoft Office</span><span class="chip">Google Workspace</span><span class="chip">Scratch</span><span class="chip">Bahasa Indonesia (native)</span><span class="chip">English (fluent)</span></div></div>
       </div>
-    </section>
-
-    <section class="section" id="projects">
-      <h2 class="section-title reveal">Project</h2>
-      <p class="muted reveal">Daftar ini diperbarui otomatis dari GitHub dan <code>projects.json</code>.</p>
-      <div class="grid" id="projectGrid"></div>
     </section>
 
     <section class="section contact" id="contact">
       <h2 class="section-title reveal">Mari berkolaborasi</h2>
-      <a class="big-link magnetic reveal" href="mailto:email@contoh.com">email@contoh.com</a>
+      <a class="big-link magnetic reveal" href="mailto:zefan.immanuel@gmail.com">zefan.immanuel@gmail.com</a>
       <div class="socials reveal">
+        <a href="https://www.linkedin.com/in/zefanya-immanuel-1b3270203" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/tephania88" target="_blank" rel="noopener">GitHub</a>
-        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </section>
   </main>
 
   <footer class="footer">© <span id="year"></span> Zefanya Immanuel Kurniawan</footer>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Tutup">✕</button>
+    <button class="lb-nav prev" id="lbPrev" aria-label="Sebelumnya">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb-nav next" id="lbNext" aria-label="Berikutnya">›</button>
+    <p class="lb-count" id="lbCount"></p>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>

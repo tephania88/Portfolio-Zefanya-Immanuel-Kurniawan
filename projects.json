@@ -1,10 +1,108 @@
 [
   {
-    "title": "Contoh Project",
-    "description": "Ganti dengan project Anda. Tambahkan entri baru di file ini lalu push, situs akan ter-update otomatis.",
-    "tags": ["Contoh", "Placeholder"],
+    "title": "Interactive HR Learning Mockups",
+    "org": "PT Trakindo Utama · 2026",
+    "description": "Mockup interaktif seri \"HR Function for Non-HR Leader\": 8 modul dan 100+ slide dengan peta Indonesia interaktif, tuas gear EVP, drag-and-drop, dan timeline simulasi. Materi internal perusahaan tidak ditampilkan di sini; demo tersedia atas permintaan.",
+    "tags": [
+      "Articulate Storyline",
+      "SCORM 1.2",
+      "Interaction Design"
+    ],
     "image": "",
-    "demo": "",
-    "repo": "https://github.com/tephania88/Portfolio-Zefanya-Immanuel-Kurniawan"
+    "gallery": [],
+    "links": []
+  },
+  {
+    "title": "KEPO Instagram Reels",
+    "org": "BTPN Syariah · Jul – Nov 2025",
+    "description": "Reel pembelajaran singkat untuk akun Instagram HC Learning BTPN Syariah: naskah, pengambilan gambar, desain cover, dan tampil sebagai talent. Seri kepribadian dan berpikir kritis.",
+    "tags": [
+      "Video",
+      "Scriptwriting",
+      "Microlearning"
+    ],
+    "image": "assets/img/page10.jpg",
+    "gallery": [
+      "assets/img/page10.jpg"
+    ],
+    "links": [
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/kepo_duluaja/"
+      }
+    ]
+  },
+  {
+    "title": "Training Presentation Revamp",
+    "org": "BTPN Syariah · 2025 – 2026",
+    "description": "Redesain lima deck pelatihan korporat (cash management, mata diklat umum, group activity, problem solving, dan surprise visit). Materi internal tidak ditampilkan; contoh tersedia atas permintaan.",
+    "tags": [
+      "Presentation Design",
+      "Infografis",
+      "Canva"
+    ],
+    "image": "",
+    "gallery": [],
+    "links": []
+  },
+  {
+    "title": "Interactive E-Module (Kotobee)",
+    "org": "Universitas Negeri Jakarta · 2024",
+    "description": "E-module interaktif proyek akhir mata kuliah Learning Material Development, didesain di Canva dan diimplementasikan di Kotobee Author.",
+    "tags": [
+      "Kotobee",
+      "Canva",
+      "E-Module"
+    ],
+    "image": "assets/img/page12.jpg",
+    "gallery": [
+      "assets/img/page12.jpg"
+    ],
+    "links": [
+      {
+        "label": "File & video",
+        "url": "https://drive.google.com/drive/folders/1bUzp9bj6-zAH-XiDB_j1qnVvY5BnZYJH?usp=sharing"
+      }
+    ]
+  },
+  {
+    "title": "LMS Content Design",
+    "org": "Universitas Negeri Jakarta · 2024",
+    "description": "Perancangan dan pengelolaan konten satu bab mata kuliah Metodologi Penelitian di LMS, lengkap dengan formulir rincian isi LMS (proyek akhir E-Learning Design).",
+    "tags": [
+      "LMS",
+      "Content Planning",
+      "Instructional Design"
+    ],
+    "image": "assets/img/page11.jpg",
+    "gallery": [
+      "assets/img/page11.jpg"
+    ],
+    "links": [
+      {
+        "label": "File desain",
+        "url": "https://drive.google.com/file/d/1-tFOG1imCnQMqv7uriPlXkkgQjPNsCxh/view?usp=sharing"
+      }
+    ]
+  },
+  {
+    "title": "Learning Modules & GBPP",
+    "org": "Universitas Negeri Jakarta · 2023 – 2024",
+    "description": "Empat modul pembelajaran (ODL, Instructional Systems Development, Learning Material Development, Training Program Development) dan GBPP untuk SD Negeri 01 Tengah Pagi Kramat Jati.",
+    "tags": [
+      "Modul",
+      "GBPP",
+      "Learning Analysis"
+    ],
+    "image": "assets/img/page13.jpg",
+    "gallery": [
+      "assets/img/page13.jpg"
+    ],
+    "links": [
+      {
+        "label": "GBPP",
+        "url": "https://drive.google.com/file/d/1I-5ILc1_Uv8_5ZJDDypsyC70DGTNnUmr/view?usp=sharing"
+      }
+    ]
   }
 ]

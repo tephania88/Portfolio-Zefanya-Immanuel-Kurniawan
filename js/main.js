@@ -57,7 +57,8 @@ $$('[data-count]').forEach(el => {
   const end = +el.dataset.count;
   ScrollTrigger.create({ trigger: el, start: 'top 90%', once: true, onEnter: () => {
     const o = { v: 0 };
-    gsap.to(o, { v: end, duration: 1.6, ease: 'power2.out', onUpdate: () => el.textContent = Math.round(o.v) + '+' });
+    const dec = +(el.dataset.dec || 0), suffix = el.dataset.suffix || '';
+    gsap.to(o, { v: end, duration: 1.6, ease: 'power2.out', onUpdate: () => el.textContent = o.v.toFixed(dec) + suffix });
   }});
 });
 
@@ -118,21 +119,59 @@ function tilt(card) {
   const grid = $('#projectGrid');
   const items = await loadProjects();
   if (!items.length) { grid.innerHTML = '<p class="muted">Belum ada project. Tambahkan di projects.json atau beri topic "portfolio" pada repo GitHub.</p>'; return; }
-  grid.innerHTML = items.map(p => `
+  const safeUrl = u => /^(https?:\/\/|demo\/)/i.test(u || '') ? esc(u) : '';
+  grid.innerHTML = items.map((p, i) => {
+    const links = [...(p.links || [])];
+    if (p.demo) links.push({ label: 'Demo', url: p.demo });
+    if (p.repo) links.push({ label: 'Kode', url: p.repo });
+    return `
     <article class="card">
-      <div class="card-img">${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">` : esc((p.title || '?')[0].toUpperCase())}</div>
+      <div class="card-img" data-i="${i}" ${p.image ? 'role="button" tabindex="0" aria-label="Buka galeri"' : ''}>${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}">` : esc((p.title || '?')[0].toUpperCase())}</div>
       <div class="card-body">
+        ${p.org ? `<small class="org">${esc(p.org)}</small>` : ''}
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.description)}</p>
         <div class="tags">${(p.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
         <div class="card-links">
-          ${p.demo ? `<a href="${esc(p.demo)}" target="_blank" rel="noopener">Demo ↗</a>` : ''}
-          ${p.repo ? `<a href="${esc(p.repo)}" target="_blank" rel="noopener">Kode ↗</a>` : ''}
+          ${links.filter(l => safeUrl(l.url)).map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}
         </div>
       </div>
-    </article>`).join('');
+    </article>`;
+  }).join('');
   $$('.card', grid).forEach(tilt);
+  $$('.card-img[data-i]', grid).forEach(el => {
+    const open = () => { const p = items[+el.dataset.i]; if (p.image) openLightbox(p.gallery?.length ? p.gallery : [p.image], p.title); };
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+  });
   if (!reduce) gsap.from('.card', { y: 70, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
     scrollTrigger: { trigger: grid, start: 'top 85%', once: true } });
   ScrollTrigger.refresh();
 })();
+
+// ====== Lightbox galeri ======
+const lb = $('#lightbox'), lbImg = $('#lbImg'), lbCount = $('#lbCount');
+let lbList = [], lbIdx = 0, lbTitle = '';
+function showLb() {
+  lbImg.src = lbList[lbIdx]; lbImg.alt = `${lbTitle} ${lbIdx + 1}`;
+  lbCount.textContent = `${lbTitle} · ${lbIdx + 1}/${lbList.length}`;
+  const multi = lbList.length > 1;
+  $('#lbPrev').style.display = $('#lbNext').style.display = multi ? '' : 'none';
+}
+function openLightbox(list, title) {
+  lbList = list; lbIdx = 0; lbTitle = title; showLb();
+  lb.hidden = false; document.body.style.overflow = 'hidden';
+  if (!reduce) gsap.fromTo(lb, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+}
+function closeLb() { lb.hidden = true; document.body.style.overflow = ''; }
+const step = d => { lbIdx = (lbIdx + d + lbList.length) % lbList.length; showLb(); };
+$('#lbClose').addEventListener('click', closeLb);
+$('#lbPrev').addEventListener('click', () => step(-1));
+$('#lbNext').addEventListener('click', () => step(1));
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+addEventListener('keydown', e => {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowLeft') step(-1);
+  if (e.key === 'ArrowRight') step(1);
+});
