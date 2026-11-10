@@ -2,7 +2,7 @@
   {
     "title": "Interactive HR Learning Mockups",
     "org": "PT Trakindo Utama · 2026",
-    "description": "Mockup interaktif seri \"HR Function for Non-HR Leader\": 8 modul dan 100+ slide dengan peta Indonesia interaktif, tuas gear EVP, drag-and-drop, dan timeline simulasi. Materi internal perusahaan tidak ditampilkan di sini; demo tersedia atas permintaan.",
+    "description": "Mockup interaktif seri \"HR Function for Non-HR Leader\": 8 modul dan 100+ slide dengan interaksi klik berurutan, drag-and-drop, peta, dan timeline simulasi. Materi asli bersifat internal, jadi simulasi di sini adalah contoh buatan sendiri dengan konten umum.",
     "tags": [
       "Articulate Storyline",
       "SCORM 1.2",
@@ -10,7 +10,8 @@
     ],
     "image": "",
     "gallery": [],
-    "links": []
+    "links": [],
+    "sample": "hr"
   },
   {
     "title": "KEPO Instagram Reels",
@@ -35,7 +36,7 @@
   {
     "title": "Training Presentation Revamp",
     "org": "BTPN Syariah · 2025 – 2026",
-    "description": "Redesain lima deck pelatihan korporat (cash management, mata diklat umum, group activity, problem solving, dan surprise visit). Materi internal tidak ditampilkan; contoh tersedia atas permintaan.",
+    "description": "Redesain lima deck pelatihan korporat menjadi slide yang jelas, visual, dan mudah diikuti. Materi asli bersifat internal, jadi ilustrasi sebelum/sesudah di sini adalah contoh buatan sendiri.",
     "tags": [
       "Presentation Design",
       "Infografis",
@@ -43,7 +44,8 @@
     ],
     "image": "",
     "gallery": [],
-    "links": []
+    "links": [],
+    "sample": "slides"
   },
   {
     "title": "Interactive E-Module (Kotobee)",

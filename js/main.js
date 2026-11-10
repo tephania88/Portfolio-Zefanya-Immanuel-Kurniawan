@@ -126,21 +126,23 @@ function tilt(card) {
     if (p.repo) links.push({ label: 'Kode', url: p.repo });
     return `
     <article class="card">
-      <div class="card-img" data-i="${i}" ${p.image ? 'role="button" tabindex="0" aria-label="Buka galeri"' : ''}>${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}">` : esc((p.title || '?')[0].toUpperCase())}</div>
+      <div class="card-img ${p.sample ? 'sim-cta' : ''}" data-i="${i}" ${p.image || p.sample ? 'role="button" tabindex="0" aria-label="' + (p.sample ? 'Coba simulasi' : 'Buka galeri') + '"' : ''}>${p.sample ? '<div class="play">▶</div><span>Coba simulasi</span>' : p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}">` : esc((p.title || '?')[0].toUpperCase())}</div>
       <div class="card-body">
         ${p.org ? `<small class="org">${esc(p.org)}</small>` : ''}
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.description)}</p>
         <div class="tags">${(p.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
         <div class="card-links">
+          ${p.sample ? `<button type="button" data-sample="${i}">▶ Coba simulasi</button>` : ''}
           ${links.filter(l => safeUrl(l.url)).map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}
         </div>
       </div>
     </article>`;
   }).join('');
   $$('.card', grid).forEach(tilt);
+  $$('button[data-sample]', grid).forEach(b => b.addEventListener('click', () => window.openSample(items[+b.dataset.sample].sample)));
   $$('.card-img[data-i]', grid).forEach(el => {
-    const open = () => { const p = items[+el.dataset.i]; if (p.image) openLightbox(p.gallery?.length ? p.gallery : [p.image], p.title); };
+    const open = () => { const p = items[+el.dataset.i]; if (p.sample) window.openSample(p.sample); else if (p.image) openLightbox(p.gallery?.length ? p.gallery : [p.image], p.title); };
     el.addEventListener('click', open);
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
