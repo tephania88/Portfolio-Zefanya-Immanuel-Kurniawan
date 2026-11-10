@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zefanya Immanuel Kurniawan — Portfolio</title>
+  <meta name="description" content="Portfolio Zefanya Immanuel Kurniawan: project, skill, dan pengalaman.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a href="#home" class="logo">ZIK<span>.</span></a>
+    <nav>
+      <a href="#about">Tentang</a>
+      <a href="#skills">Skill</a>
+      <a href="#projects">Project</a>
+      <a href="#contact">Kontak</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Ganti tema">◐</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <p class="eyebrow reveal">Halo, saya</p>
+      <h1 class="hero-title">
+        <span class="line"><span class="word">Zefanya</span></span>
+        <span class="line"><span class="word">Immanuel</span></span>
+        <span class="line"><span class="word accent">Kurniawan</span></span>
+      </h1>
+      <p class="hero-sub reveal">[Profesi Anda] — membangun hal bermanfaat dan membuatnya enak dipakai.</p>
+      <div class="hero-cta reveal">
+        <a href="#projects" class="btn magnetic">Lihat project</a>
+        <a href="#contact" class="btn ghost magnetic">Hubungi saya</a>
+      </div>
+      <div class="scroll-hint">scroll ↓</div>
+    </section>
+
+    <section class="section" id="about">
+      <h2 class="section-title reveal">Tentang saya</h2>
+      <div class="about-grid">
+        <p class="lead reveal">Ganti teks ini dengan perkenalan singkat Anda: latar belakang, apa yang Anda kerjakan, dan apa yang Anda cari.</p>
+        <div class="stats">
+          <div class="stat reveal"><b data-count="3">0</b><span>Tahun pengalaman</span></div>
+          <div class="stat reveal"><b data-count="10">0</b><span>Project selesai</span></div>
+          <div class="stat reveal"><b data-count="5">0</b><span>Sertifikasi</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <h2 class="section-title reveal">Skill</h2>
+      <div class="chips">
+        <span class="chip reveal">Skill 1</span><span class="chip reveal">Skill 2</span>
+        <span class="chip reveal">Skill 3</span><span class="chip reveal">Skill 4</span>
+        <span class="chip reveal">Skill 5</span><span class="chip reveal">Skill 6</span>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <h2 class="section-title reveal">Project</h2>
+      <p class="muted reveal">Daftar ini diperbarui otomatis dari GitHub dan <code>projects.json</code>.</p>
+      <div class="grid" id="projectGrid"></div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <h2 class="section-title reveal">Mari berkolaborasi</h2>
+      <a class="big-link magnetic reveal" href="mailto:email@contoh.com">email@contoh.com</a>
+      <div class="socials reveal">
+        <a href="https://github.com/tephania88" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© <span id="year"></span> Zefanya Immanuel Kurniawan</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
