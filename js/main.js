@@ -87,7 +87,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': 
 async function loadProjects() {
   const list = [];
   try {
-    const r = await fetch('projects.json?v=7', { cache: 'no-cache' });
+    const r = await fetch('projects.json?v=8', { cache: 'no-cache' });
     if (r.ok) list.push(...await r.json());
   } catch (e) {}
   try {

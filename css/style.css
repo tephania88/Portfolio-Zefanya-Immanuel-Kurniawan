@@ -255,3 +255,6 @@ code{background:var(--surface);padding:.1em .4em;border-radius:6px;font-size:.9e
 @media(max-width:640px){.lb-links{top:12px;left:8px;right:56px;gap:6px}.lb-links a{font-size:.75rem;padding:6px 12px}}
 
 .card-links{flex-wrap:wrap;row-gap:8px;column-gap:16px}
+
+.socials .wa{display:inline-flex;align-items:center;gap:8px}
+.socials .wa:hover{color:#25d366}
