@@ -1,15 +1,18 @@
 # Portfolio-Zefanya-Immanuel-Kurniawan
 
-Portfolio web statis (HTML/CSS/JS + GSAP + Lenis), dihosting gratis di GitHub Pages.
+Static portfolio website (HTML/CSS/JS + GSAP + Lenis), hosted for free on GitHub Pages.
 
-## Menambah project baru
-- **Otomatis:** beri topic `portfolio` pada repo GitHub Anda, project muncul sendiri.
-- **Manual:** tambahkan entri di `projects.json` lalu `git push`.
+## Adding a new project
+- **Automatic:** give a GitHub repo the topic `portfolio` and it appears on the site.
+- **Manual:** add an entry to `projects.json`, then `git push`.
 
-Setiap push ke `main` dideploy otomatis oleh `.github/workflows/pages.yml`.
+Every push to `main` is deployed automatically by `.github/workflows/pages.yml`.
 
-## Jalankan lokal
+## Run locally
 ```
 python -m http.server 8000
 ```
-Buka http://localhost:8000
+Open http://localhost:8000
+
+## Note
+This repository is public. Do not add internal company material or other people's personal data.

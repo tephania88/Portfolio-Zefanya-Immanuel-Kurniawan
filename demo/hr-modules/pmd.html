@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./image-slot.js"></script>
+<style>
+@font-face{font-family:ANC;font-weight:400;font-style:normal;src:local('Arial Nova Cond'),local('ArialNova-Cond'),local('Arial Nova Condensed'),local('Arial Narrow'),local('ArialNarrow'),url("_ds/trakindo-e-learning-design-system-69992819-2eae-4a1b-9861-d06737224568/fonts/BarlowCondensed-600.woff2") format("woff2")}
+@font-face{font-family:ANC;font-weight:700;font-style:normal;src:local('Arial Nova Cond Bold'),local('ArialNova-CondBold'),local('Arial Nova Condensed Bold'),local('Arial Narrow Bold'),local('ArialNarrow-Bold'),url("_ds/trakindo-e-learning-design-system-69992819-2eae-4a1b-9861-d06737224568/fonts/BarlowCondensed-700.woff2") format("woff2")}
+@font-face{font-family:ANC;font-weight:700;font-style:italic;src:local('Arial Nova Cond Bold Italic'),local('ArialNova-CondBoldItalic'),local('Arial Narrow Bold Italic'),url("_ds/trakindo-e-learning-design-system-69992819-2eae-4a1b-9861-d06737224568/fonts/Barlow-700Italic.woff2") format("woff2")}
+@font-face{font-family:ANCI;font-weight:400;font-style:italic;src:local('Arial Nova Cond Italic'),local('ArialNova-CondItalic'),local('Arial Narrow Italic'),local('ArialNarrow-Italic'),url("_ds/trakindo-e-learning-design-system-69992819-2eae-4a1b-9861-d06737224568/fonts/Barlow-400.woff2") format("woff2")}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+@keyframes wl{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes pl{0%,100%{box-shadow:0 0 0 0 rgba(251,185,41,0)}50%{box-shadow:0 0 0 6px rgba(251,185,41,.5)}}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes odUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes odFade{from{opacity:0}to{opacity:1}}
+@keyframes odLeft{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes odDrop{from{opacity:0;transform:translateY(-16px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}}
+@keyframes odWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes odPulse{0%,100%{box-shadow:0 0 0 0 rgba(251,185,41,.7)}50%{box-shadow:0 0 0 12px rgba(251,185,41,0)}}
+/* Cue VO (docs/WORKFLOW_VO.md §4.2): item interaktif terkunci selama VO slide */
+[data-vlock="1"] [data-item="1"]{opacity:.45!important;pointer-events:none!important;cursor:default!important}
+/* ── Standar tampilan seri M01–M08 (docs/STANDAR_Tampilan.md, 30 Okt 2026) — salin blok ini apa adanya ke modul lain ── */
+@keyframes stdIn{from{opacity:0}to{opacity:1}}
+@keyframes stdOut{from{opacity:1}to{opacity:0}}
+@keyframes stdUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes stdPopIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes stdPopOut{from{opacity:1;transform:none}to{opacity:0;transform:scale(.97)}}
+@keyframes stdNext{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes stdDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes stdGlow{0%,100%{box-shadow:0 0 0 0 rgba(251,185,41,0)}35%{box-shadow:0 0 0 5px rgba(251,185,41,.95)}}
+@keyframes stdPing{0%{transform:scale(1);opacity:.85}100%{transform:scale(2.6);opacity:0}}
+[data-std="in"]{animation:stdIn .35s ease-out both}
+[data-std="up"]{animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both}
+[data-std="scrim"]{animation:stdIn .3s ease-out both}
+[data-std="pop"]{animation:stdPopIn .3s cubic-bezier(.2,.7,.2,1) both}
+[data-std="next"]{animation:stdNext .3s cubic-bezier(.2,.7,.2,1) both}
+[data-out="1"]{animation:stdOut .22s ease-in both!important;pointer-events:none!important}
+[data-std="pop"][data-out="1"]{animation:stdPopOut .22s ease-in both!important}
+[data-std="close"]:hover{outline:2px solid #FBB929;outline-offset:3px}
+[data-std="close-x"]:hover{outline:2px solid #171717;outline-offset:3px}
+/* Lapisan (31 Okt 2026): Main Hub (L_MainHub) di atas isi slide; scrim + popup standar di atas Main Hub. Footer (Y671–720) tidak tertutup. */
+[data-layer="hub"]{z-index:40}
+[data-std="scrim"],[data-std="pop"]{z-index:50}
+html,body{margin:0;height:100%;background:#1f1f1f;overflow:hidden}
+*{box-sizing:border-box}
+button{font-family:ANC,sans-serif}
+a{color:#FBB929}a:hover{color:#FFD77A}
+</style>
+</helmet>
+<div ref="{{ wrapRef }}" style="position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#1f1f1f;font-family:ANC,sans-serif">
+<div style="position:relative;width:{{ stageW }}px;height:{{ stageH }}px;flex:none">
+<div data-screen-label="{{ screenLabel }}" data-vlock="{{ vlock }}" style="position:absolute;left:0;top:0;width:1280px;height:720px;overflow:hidden;transform-origin:0 0;transform:scale({{ scale }});background:#2b2b2b;font-family:ANC,sans-serif">
+
+<div style="position:absolute;left:0;top:0;width:1280px;height:80px;background:#2b2b2b;display:flex;align-items:center;justify-content:space-between;padding:4px 18px 14px">
+<img src="assets/brand/logo-placeholder.png" alt="Company logo" style="height:40px;width:auto;display:block">
+<div style="display:flex;flex-direction:column;align-items:flex-end;line-height:1.1">
+<div style="font:italic 700 25px ANC;color:#fff">Module HR Function For NON-HR Leader</div>
+<div style="font:400 15px ANC;letter-spacing:.06em;color:#1a1a1a;background:#d7d7d7;padding:3px 9px;margin-top:4px">PERFORMANCE MANAGEMENT</div>
+</div>
+</div>
+<div style="position:absolute;left:0;top:80px;width:1280px;height:591px;background:#FBB929"></div>
+<div style="position:absolute;left:0;top:244px;width:1280px;height:421px;background:#171717"></div>
+
+<sc-if value="{{ is.s01 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;align-items:center;justify-content:center">
+<div style="font:700 38px/1.2 ANC;color:#171717">Process HR Learning Module</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ next }}" data-item="1" aria-label="Open Performance Management" style="position:absolute;left:462px;top:381px;width:356px;height:152px;border:2px solid #2f353d;border-radius:16px;background:#12161b;box-shadow:inset 0 2px 0 rgba(255,255,255,.08),inset 0 -3px 0 rgba(0,0,0,.45),0 8px 18px rgba(0,0,0,.55);color:#fff;padding:46px 20px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;text-align:center;font:700 25px/1.3 ANC;transition:border-color .2s,transform .2s;animation:fu .5s ease both" style-hover="border-color:#FBB929;transform:translateY(-3px)">
+<div style="position:absolute;left:112px;top:-66px;width:128px;height:128px;border-radius:50%;background:#12161b;box-shadow:inset 0 3px 0 rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center">
+<div style="width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 3px 6px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center">
+<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.5"></circle><circle cx="17" cy="6" r="2.5"></circle><path d="M3 14a4 4 0 0 1 8 0"></path><path d="M13 14a4 4 0 0 1 8 0"></path><path d="M2 17h20"></path><path d="M6 17v4M18 17v4"></path></svg>
+</div>
+</div>
+<span>Performance<br>Management</span>
+</button>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:340px;top:573px;width:600px;text-align:center;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#d7d7d7;opacity:.75;animation:fi .5s ease both">Click the topic card to start.</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s02 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Performance Management and Development (PMD)</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">What is PMD?</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:368px;height:296px;overflow:hidden;animation:stdIn .4s ease-out 0s both"><image-slot id="ilus-sl02" shape="rect" placeholder="Thinking character illustration"></image-slot></div>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:440px;top:272px;width:800px;height:64px;display:flex;gap:16px;align-items:center;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<button data-item="1" onClick="{{ s02.what.go }}" style="width:200px;height:64px;border:2px solid {{ s02.what.bd }};background:{{ s02.what.bg }};color:{{ s02.what.fg }};opacity:{{ s02.what.op }};pointer-events:{{ s02.what.pe }};font:700 25px/1 ANC;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,opacity .3s;animation:{{ s02.what.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">WHAT?</button>
+<button data-item="1" onClick="{{ s02.why.go }}" style="width:200px;height:64px;border:2px solid {{ s02.why.bd }};background:{{ s02.why.bg }};color:{{ s02.why.fg }};opacity:{{ s02.why.op }};pointer-events:{{ s02.why.pe }};font:700 25px/1 ANC;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,opacity .3s;animation:{{ s02.why.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">WHY?</button>
+<div style="flex:1;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;text-align:right">*Click each button to see the explanation</div>
+</div>
+<div style="position:absolute;left:440px;top:360px;width:800px;height:208px;background:#3c3c3c;border-left:5px solid #FBB929;padding:16px 26px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.15s both">
+<sc-if value="{{ a02.none }}" hint-placeholder-val="{{ true }}"><div data-out="{{ out.s02 }}" style="height:100%;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#a8a8a8">Select WHAT? or WHY? to see the explanation.</div></sc-if>
+<sc-if value="{{ a02.what }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s02 }}" style="height:100%;display:flex;align-items:center;font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdIn .35s ease-out both">An integrated approach, involving employees and their superiors, to align performance with organizational goals through planning, coaching, evaluation, and ongoing development</div></sc-if>
+<sc-if value="{{ a02.why }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s02 }}" style="height:100%;display:flex;flex-direction:column;justify-content:center;gap:14px">
+<div style="display:flex;gap:18px;align-items:flex-start;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both"><div style="flex:none;font:700 25px/1.1 ANC;color:#FBB929;width:36px">01</div><div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty">Ensures that the company’s strategic objectives are translated into employees’ work plans, so every individual contributes directly to organizational success</div></div>
+<sc-if value="{{ a02.p2 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:18px;align-items:flex-start;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both"><div style="flex:none;font:700 25px/1.1 ANC;color:#FBB929;width:36px">02</div><div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty">Through coaching, counseling and development plans, PMD supports employees in improving skills and performance overtime</div></div></sc-if>
+</div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s03 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Role of Non-HR Leaders in PMD</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:368px;height:296px;overflow:hidden;animation:stdIn .4s ease-out 0s both"><image-slot id="ilus-sl03" shape="rect" placeholder="Thinking character illustration"></image-slot></div>
+<div style="position:absolute;left:452px;top:308px;width:788px;height:224px;background:#FBB929;display:flex;align-items:center;padding:0 48px;animation:odLeft .5s ease-out .25s both">
+<div style="position:absolute;left:-24px;top:88px;width:0;height:0;border-top:24px solid transparent;border-bottom:24px solid transparent;border-right:24px solid #FBB929"></div>
+<div style="font:700 38px/1.2 ANC;color:#171717;text-wrap:balance">Then what is the role of Non-HR Leaders in PMD?</div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s04 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Role of Non-HR Leaders in PMD</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:368px;height:296px;overflow:hidden;animation:stdIn .4s ease-out 0s both"><image-slot id="ilus-sl04" shape="rect" placeholder="Thinking character illustration"></image-slot></div>
+<div style="position:absolute;left:440px;top:272px;width:440px;height:64px;display:flex;gap:16px;align-items:center;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.2s both">
+<button data-item="1" onClick="{{ s04.r1.go }}" style="width:200px;height:64px;border:2px solid {{ s04.r1.bd }};background:{{ s04.r1.bg }};color:{{ s04.r1.fg }};opacity:{{ s04.r1.op }};pointer-events:{{ s04.r1.pe }};font:700 25px/1 ANC;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,opacity .3s;animation:{{ s04.r1.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">ROLE 1</button>
+<button data-item="1" onClick="{{ s04.r2.go }}" style="width:200px;height:64px;border:2px solid {{ s04.r2.bd }};background:{{ s04.r2.bg }};color:{{ s04.r2.fg }};opacity:{{ s04.r2.op }};pointer-events:{{ s04.r2.pe }};font:700 25px/1 ANC;letter-spacing:.06em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,opacity .3s;animation:{{ s04.r2.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">ROLE 2</button>
+</div>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:896px;top:272px;width:344px;height:64px;display:flex;align-items:center;justify-content:flex-end;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;text-align:right;animation:stdIn .4s ease-out 0s both">*Click each button to see the explanation</div>
+<div style="position:absolute;left:440px;top:360px;width:800px;height:208px;background:#3c3c3c;border-left:5px solid #FBB929;padding:16px 26px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.1s both">
+<sc-if value="{{ a04.none }}" hint-placeholder-val="{{ true }}"><div data-out="{{ out.s04 }}" style="height:100%;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#a8a8a8">Select ROLE 1 or ROLE 2 to see the explanation.</div></sc-if>
+<sc-if value="{{ a04.r1 }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s04 }}" style="height:100%;display:flex;align-items:center;font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdIn .35s ease-out both"><span>Develop a deep understanding of PMD, as they are directly responsible for guiding and supporting their teams, ensuring PMD success by setting clear expectations, providing coaching and feedback through <strong style="color:#fff;font-weight:700">two-way communication — as the soul of PMD</strong> and driving accountability for performance and development.</span></div></sc-if>
+<sc-if value="{{ a04.r2 }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s04 }}" style="height:100%;display:flex;align-items:center;font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdIn .35s ease-out both">Work collaboratively with HR to implement PMD processes and ensure they run effectively and consistently across the organization</div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s05 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">PMD in Employee Experience Journey</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Stage Definition (Employee Perspective)</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.10s both">
+<button data-item="1" onClick="{{ t05.1.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%);background:{{ t05.1.bg }};color:{{ t05.1.fg }};opacity:{{ t05.1.op }};pointer-events:{{ t05.1.pe }};cursor:pointer;padding:0 22px 0 8px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Attract</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.1.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-1" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-1.png" placeholder="Icon — Attract"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.1.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Interest to join as the valuable asset to the company</div></sc-if>
+<sc-if value="{{ t05.1.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:214px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.22s both">
+<button data-item="1" onClick="{{ t05.2.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);background:{{ t05.2.bg }};color:{{ t05.2.fg }};opacity:{{ t05.2.op }};pointer-events:{{ t05.2.pe }};cursor:pointer;padding:0 22px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Hire</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.2.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-2" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-2.png" placeholder="Icon — Hire"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.2.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Simple and respect/well treated hire process</div></sc-if>
+<sc-if value="{{ t05.2.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:388px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.34s both">
+<button data-item="1" onClick="{{ t05.3.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);background:{{ t05.3.bg }};color:{{ t05.3.fg }};opacity:{{ t05.3.op }};pointer-events:{{ t05.3.pe }};cursor:pointer;padding:0 22px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Onboard</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.3.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-3" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-3.png" placeholder="Icon — Onboard"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.3.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Provide perspective of company, with structured and comfortable</div></sc-if>
+<sc-if value="{{ t05.3.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:562px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.46s both">
+<button data-item="1" onClick="{{ t05.4.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);background:{{ t05.4.bg }};color:{{ t05.4.fg }};opacity:{{ t05.4.op }};pointer-events:{{ t05.4.pe }};cursor:pointer;padding:0 22px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Learn &amp; Develop</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.4.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-4" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-4.png" placeholder="Icon — Learn &amp; Develop"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.4.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Learning and develop for current and future role</div></sc-if>
+<sc-if value="{{ t05.4.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:736px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.58s both">
+<button data-item="1" onClick="{{ t05.5.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);background:{{ t05.5.bg }};color:{{ t05.5.fg }};opacity:{{ t05.5.op }};pointer-events:{{ t05.5.pe }};cursor:pointer;padding:0 22px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Perform &amp; Feedback</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.5.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-5" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-5.png" placeholder="Icon — Perform &amp; Feedback"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.5.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Evaluate and support to continually have a high performance</div></sc-if>
+<sc-if value="{{ t05.5.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:910px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.70s both">
+<button data-item="1" onClick="{{ t05.6.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);background:{{ t05.6.bg }};color:{{ t05.6.fg }};opacity:{{ t05.6.op }};pointer-events:{{ t05.6.pe }};cursor:pointer;padding:0 22px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Manage &amp; Retain</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.6.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-6" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-6.png" placeholder="Icon — Manage &amp; Retain"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.6.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Ease of process and access regarding employee benefit with transparency</div></sc-if>
+<sc-if value="{{ t05.6.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+<div style="position:absolute;left:1084px;top:292px;width:156px;height:276px;animation:odLeft .4s ease-out 0.82s both">
+<button data-item="1" onClick="{{ t05.7.go }}" style="position:absolute;left:0;top:0;width:156px;height:56px;border:0;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,18px 50%);background:{{ t05.7.bg }};color:{{ t05.7.fg }};opacity:{{ t05.7.op }};pointer-events:{{ t05.7.pe }};cursor:pointer;padding:0 8px 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font:700 20px/1.3 ANC;transition:background .2s,color .2s,opacity .3s" style-hover="filter:brightness(1.15)">Depart</button>
+<div style="position:absolute;left:54px;top:64px;width:48px;height:48px;opacity:{{ t05.7.io }};transition:opacity .3s"><image-slot id="pmd-ikon-sl05-7" shape="rect" fit="contain" src="assets/rm/rm-ikon-sl08-7.png" placeholder="Icon — Depart"></image-slot></div>
+<div style="position:absolute;left:0;top:122px;width:156px;height:154px;text-align:center">
+<sc-if value="{{ t05.7.open }}" hint-placeholder-val="{{ false }}"><div style="font:400 20px/1.35 ANC;color:#fff;animation:odDrop .45s ease-out both">Transition leaving out smoothly and run effectively</div></sc-if>
+<sc-if value="{{ t05.7.hint }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:bl 1.2s ease-in-out infinite">Click ›</div></sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:256px;width:1200px;display:flex;justify-content:space-between;align-items:center;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .4s ease-out 0s both"><span>*Follow the journey from left to right — click each stage to see its definition</span><span style="font:700 15px/1.3 ANC;color:#FBB929">{{ s05c }} / 7 stages viewed</span></div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s19 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">PMD in Employee Experience Journey</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Where is Performance Management &amp; Development in Employee Experience Journey?</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:56px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">
+<div style="height:56px;background:{{ c19.1.bg }};color:{{ c19.1.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.1.dl }}s,color .45s ease {{ c19.1.dl }}s;animation:odLeft .4s ease-out 0.05s both">Attract</div>
+<div style="height:56px;background:{{ c19.2.bg }};color:{{ c19.2.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.2.dl }}s,color .45s ease {{ c19.2.dl }}s;animation:odLeft .4s ease-out 0.13s both">Hire</div>
+<div style="height:56px;background:{{ c19.3.bg }};color:{{ c19.3.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.3.dl }}s,color .45s ease {{ c19.3.dl }}s;animation:odLeft .4s ease-out 0.21s both">Onboard</div>
+<div style="height:56px;background:{{ c19.4.bg }};color:{{ c19.4.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.4.dl }}s,color .45s ease {{ c19.4.dl }}s;animation:odLeft .4s ease-out 0.29s both">Learn &amp; Develop</div>
+<div style="height:56px;background:{{ c19.5.bg }};color:{{ c19.5.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.5.dl }}s,color .45s ease {{ c19.5.dl }}s;animation:odLeft .4s ease-out 0.37s both">Perform &amp; Feedback</div>
+<div style="height:56px;background:{{ c19.6.bg }};color:{{ c19.6.fg }};clip-path:polygon(0 0,calc(100% - 18px) 0,100% 50%,calc(100% - 18px) 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.6.dl }}s,color .45s ease {{ c19.6.dl }}s;animation:odLeft .4s ease-out 0.45s both">Manage &amp; Retain</div>
+<div style="height:56px;background:{{ c19.7.bg }};color:{{ c19.7.fg }};clip-path:polygon(0 0,100% 0,100% 100%,0 100%,18px 50%);display:flex;align-items:center;justify-content:center;text-align:center;font:700 15px/1.3 ANC;letter-spacing:.03em;text-transform:uppercase;padding:0 20px;transition:background .45s ease {{ c19.7.dl }}s,color .45s ease {{ c19.7.dl }}s;animation:odLeft .4s ease-out 0.53s both">Depart</div>
+</div>
+<sc-for list="{{ s19g }}" as="g" hint-placeholder-count="8">
+<div style="position:absolute;left:{{ g.x }}px;top:332px;width:0;height:208px;border-left:1px solid #3a3a3a;animation:stdIn .4s ease-out .5s both"></div>
+</sc-for>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;top:0;width:0;height:0;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<button data-item="1" onClick="{{ f19.od.go }}" style="position:absolute;left:{{ f19.od.x }}px;top:348px;width:{{ f19.od.w }}px;height:40px;border:2px {{ f19.od.bs }} {{ f19.od.bd }};background:{{ f19.od.bg }};color:{{ f19.od.fg }};box-shadow:{{ f19.od.sh }};opacity:{{ f19.od.op }};pointer-events:{{ f19.od.pe }};font:700 15px/1.3 ANC;letter-spacing:.05em;text-transform:uppercase;text-align:left;padding:0 18px;cursor:pointer;white-space:nowrap;transition:left .6s ease,width .6s ease,background .4s,color .4s,opacity .4s,border-color .4s;animation:{{ f19.od.anim }}" style-hover="filter:brightness(1.15)">Organization Develop<span style="display:{{ f19.od.ar }}">&nbsp;&nbsp;›</span></button>
+<button data-item="1" onClick="{{ f19.rm.go }}" style="position:absolute;left:{{ f19.rm.x }}px;top:396px;width:{{ f19.rm.w }}px;height:40px;border:2px {{ f19.rm.bs }} {{ f19.rm.bd }};background:{{ f19.rm.bg }};color:{{ f19.rm.fg }};box-shadow:{{ f19.rm.sh }};opacity:{{ f19.rm.op }};pointer-events:{{ f19.rm.pe }};font:700 15px/1.3 ANC;letter-spacing:.05em;text-transform:uppercase;text-align:left;padding:0 18px;cursor:pointer;white-space:nowrap;transition:left .6s ease,width .6s ease,background .4s,color .4s,opacity .4s,border-color .4s;animation:{{ f19.rm.anim }}" style-hover="filter:brightness(1.15)">Reward Management<span style="display:{{ f19.rm.ar }}">&nbsp;&nbsp;›</span></button>
+<button data-item="1" onClick="{{ f19.tm.go }}" style="position:absolute;left:{{ f19.tm.x }}px;top:444px;width:{{ f19.tm.w }}px;height:40px;border:2px {{ f19.tm.bs }} {{ f19.tm.bd }};background:{{ f19.tm.bg }};color:{{ f19.tm.fg }};box-shadow:{{ f19.tm.sh }};opacity:{{ f19.tm.op }};pointer-events:{{ f19.tm.pe }};font:700 15px/1.3 ANC;letter-spacing:.05em;text-transform:uppercase;text-align:left;padding:0 18px;cursor:pointer;white-space:nowrap;transition:left .6s ease,width .6s ease,background .4s,color .4s,opacity .4s,border-color .4s;animation:{{ f19.tm.anim }}" style-hover="filter:brightness(1.15)">Talent Management<span style="display:{{ f19.tm.ar }}">&nbsp;&nbsp;›</span></button>
+<button data-item="1" onClick="{{ f19.pmd.go }}" style="position:absolute;left:{{ f19.pmd.x }}px;top:492px;width:{{ f19.pmd.w }}px;height:40px;border:2px {{ f19.pmd.bs }} {{ f19.pmd.bd }};background:{{ f19.pmd.bg }};color:{{ f19.pmd.fg }};box-shadow:{{ f19.pmd.sh }};opacity:{{ f19.pmd.op }};pointer-events:{{ f19.pmd.pe }};font:700 15px/1.3 ANC;letter-spacing:.05em;text-transform:uppercase;text-align:left;padding:0 18px;cursor:pointer;white-space:nowrap;transition:left .6s ease,width .6s ease,background .4s,color .4s,opacity .4s,border-color .4s;animation:{{ f19.pmd.anim }}" style-hover="filter:brightness(1.15)">PMD — Performance Management &amp; Development<span style="display:{{ f19.pmd.ar }}">&nbsp;&nbsp;›</span></button>
+</div>
+<sc-if value="{{ c19.hint }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;left:40px;top:552px;width:1120px;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .4s ease-out both">*Click each function in order — its arrows light up to show which journey stages it covers</div></sc-if>
+</sc-if>
+<sc-if value="{{ c19.on }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:40px;top:548px;width:1040px;min-height:64px;background:#3c3c3c;border-left:5px solid #4A8FE7;display:flex;align-items:center;gap:16px;padding:8px 20px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) .3s both">
+<div style="font:700 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929;flex:none">CONCLUSION</div>
+<div style="font:400 20px/1.35 ANC;color:#e2e2e2">In the Employee Experience Journey, <strong style="color:#fff">PMD covers Onboard, Learn &amp; Develop, Perform &amp; Feedback, and Manage &amp; Retain</strong>.</div>
+</div></sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s20 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">PMD in Employee Experience Journey</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:92px;background:#3c3c3c;display:flex;animation:odLeft .4s ease-out 0.00s both"><div style="width:96px;flex:none;background:#FBB929;display:flex;align-items:center;justify-content:center"><div style="width:56px;height:56px;filter:brightness(0);animation:stdIn .4s ease-out 0.20s both"><image-slot id="pmd-ikon-sl20-1" src="assets/pmd/pmd-ikon-sl20-1.png" shape="rect" fit="contain" placeholder="Icon — clarity"></image-slot></div></div><sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="width:200px;flex:none;padding:0 22px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:#FBB929;animation:stdIn .35s ease-out both">Clarity</div><div style="flex:1;padding:0 24px 0 0;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#e2e2e2;text-wrap:pretty;animation:odWipe .5s ease-out .1s both"><span>Through PMD, employees gain <strong style="color:#fff;font-weight:700">clarity</strong> in planning the targets they need to achieve and understand how company objectives cascade down to individual goals in an aligned and transparent manner</span></div>
+</sc-if></div>
+<div style="position:absolute;left:40px;top:374px;width:1200px;height:92px;background:#3c3c3c;display:flex;animation:odLeft .4s ease-out 0.15s both"><div style="width:96px;flex:none;background:#FBB929;display:flex;align-items:center;justify-content:center"><div style="width:56px;height:56px;filter:brightness(0);animation:stdIn .4s ease-out 0.35s both"><image-slot id="pmd-ikon-sl20-2" src="assets/pmd/pmd-ikon-sl20-2.png" shape="rect" fit="contain" placeholder="Icon — motivation"></image-slot></div></div><sc-if value="{{ cu.c3 }}" hint-placeholder-val="{{ true }}">
+<div style="width:200px;flex:none;padding:0 22px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:#FBB929;animation:stdIn .35s ease-out both">Motivation</div><div style="flex:1;padding:0 24px 0 0;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#e2e2e2;text-wrap:pretty;animation:odWipe .5s ease-out .1s both"><span>PMD fosters <strong style="color:#fff;font-weight:700">motivation</strong> by providing opportunities for development, coaching, and constructive feedback. It also helps employees identify the path required to prepare for career planning opportunities, supported by their superiors.</span></div>
+</sc-if></div>
+<div style="position:absolute;left:40px;top:476px;width:1200px;height:92px;background:#3c3c3c;display:flex;animation:odLeft .4s ease-out 0.30s both"><div style="width:96px;flex:none;background:#FBB929;display:flex;align-items:center;justify-content:center"><div style="width:56px;height:56px;filter:brightness(0);animation:stdIn .4s ease-out 0.50s both"><image-slot id="pmd-ikon-sl20-3" src="assets/pmd/pmd-ikon-sl20-3.png" shape="rect" fit="contain" placeholder="Icon — engagement"></image-slot></div></div><sc-if value="{{ cu.c4 }}" hint-placeholder-val="{{ true }}">
+<div style="width:200px;flex:none;padding:0 22px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:#FBB929;animation:stdIn .35s ease-out both">Engagement</div><div style="flex:1;padding:0 24px 0 0;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#e2e2e2;text-wrap:pretty;animation:odWipe .5s ease-out .1s both"><span>Through PMD approach ensures that employees feel <strong style="color:#fff;font-weight:700">engaged, informed, and empowered</strong> to contribute meaningfully to organizational success</span></div>
+</sc-if></div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s21 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Balanced Scorecard Approach in the PMD Process</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Within the PMD process, KPIs are categorized into four perspectives aligned with the Balanced Scorecard methodology</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:0;top:0;width:0;height:0;animation:stdIn .4s ease-out 0s both">
+<div style="position:absolute;left:368px;top:336px;width:4px;height:32px;background:{{ c21.fin.bg }};opacity:{{ c21.fin.op }};transition:background .3s,opacity .5s ease"></div>
+<div style="position:absolute;left:240px;top:418px;width:78px;height:4px;background:{{ c21.cus.bg }};opacity:{{ c21.cus.op }};transition:background .3s,opacity .5s ease"></div>
+<div style="position:absolute;left:422px;top:418px;width:78px;height:4px;background:{{ c21.int.bg }};opacity:{{ c21.int.op }};transition:background .3s,opacity .5s ease"></div>
+<div style="position:absolute;left:368px;top:472px;width:4px;height:32px;background:{{ c21.lg.bg }};opacity:{{ c21.lg.op }};transition:background .3s,opacity .5s ease"></div>
+<button data-item="{{ p21.fin.di }}" onClick="{{ p21.fin.go }}" style="position:absolute;left:245px;top:272px;width:250px;height:64px;border:2px solid {{ p21.fin.bd }};background:{{ p21.fin.bg }};opacity:{{ p21.fin.op }};pointer-events:{{ p21.fin.pe }};transform:translateY({{ p21.fin.ty }}px);padding:6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;transition:background .25s,border-color .25s,opacity .5s ease .15s,transform .5s ease .15s;animation:{{ p21.fin.anim }}" style-hover="border-color:#FBB929">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.1em;color:{{ p21.fin.ec }}">PERSPECTIVE</div>
+<div style="font:700 25px/1.3 ANC;color:{{ p21.fin.tc }}">Financial</div>
+</button>
+<button data-item="{{ p21.cus.di }}" onClick="{{ p21.cus.go }}" style="position:absolute;left:40px;top:388px;width:200px;height:64px;border:2px solid {{ p21.cus.bd }};background:{{ p21.cus.bg }};opacity:{{ p21.cus.op }};pointer-events:{{ p21.cus.pe }};transform:translateY({{ p21.cus.ty }}px);padding:6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;transition:background .25s,border-color .25s,opacity .5s ease .15s,transform .5s ease .15s;animation:{{ p21.cus.anim }}" style-hover="border-color:#FBB929">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.1em;color:{{ p21.cus.ec }}">PERSPECTIVE</div>
+<div style="font:700 25px/1.3 ANC;color:{{ p21.cus.tc }}">Customer</div>
+</button>
+<button data-item="{{ p21.int.di }}" onClick="{{ p21.int.go }}" style="position:absolute;left:500px;top:388px;width:200px;height:64px;border:2px solid {{ p21.int.bd }};background:{{ p21.int.bg }};opacity:{{ p21.int.op }};pointer-events:{{ p21.int.pe }};transform:translateY({{ p21.int.ty }}px);padding:6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;transition:background .25s,border-color .25s,opacity .5s ease .15s,transform .5s ease .15s;animation:{{ p21.int.anim }}" style-hover="border-color:#FBB929">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.1em;color:{{ p21.int.ec }}">PERSPECTIVE</div>
+<div style="font:700 25px/1.3 ANC;color:{{ p21.int.tc }}">Internal Process</div>
+</button>
+<button data-item="{{ p21.lg.di }}" onClick="{{ p21.lg.go }}" style="position:absolute;left:245px;top:504px;width:250px;height:64px;border:2px solid {{ p21.lg.bd }};background:{{ p21.lg.bg }};opacity:{{ p21.lg.op }};pointer-events:{{ p21.lg.pe }};transform:translateY({{ p21.lg.ty }}px);padding:6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;transition:background .25s,border-color .25s,opacity .5s ease .15s,transform .5s ease .15s;animation:{{ p21.lg.anim }}" style-hover="border-color:#FBB929">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.1em;color:{{ p21.lg.ec }}">PERSPECTIVE</div>
+<div style="font:700 25px/1.3 ANC;color:{{ p21.lg.tc }}">Learning &amp; Growth</div>
+</button>
+<button data-item="1" onClick="{{ h21.go }}" aria-label="Vision and Strategy" style="position:absolute;left:318px;top:368px;width:104px;height:104px;border-radius:50%;border:3px solid #FBB929;background:{{ h21.bg }};color:{{ h21.fg }};padding:0 10px;cursor:{{ h21.cur }};font:700 15px/1.3 ANC;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;text-align:center;transition:background .3s,color .3s;animation:{{ h21.anim }}">VISION &amp; STRATEGY</button>
+</div>
+<sc-if value="{{ a21.arr }}" hint-placeholder-val="{{ false }}">
+<svg style="position:absolute;left:0;top:0;width:1280px;height:720px;overflow:visible;pointer-events:none" viewBox="0 0 1280 720">
+<path d="M150 382L239 312" pathLength="1" fill="none" stroke="#FBB929" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;animation:stdDraw .7s ease-in-out 0.00s both"></path>
+<polygon points="239,312 226.6,314.1 234.1,323.5" fill="#FBB929" style="animation:stdIn .25s ease-out 0.60s both"></polygon>
+<polygon points="150,382 162.4,379.9 154.9,370.5" fill="#FBB929" style="animation:stdIn .25s ease-out 0.60s both"></polygon>
+<path d="M501 312L590 382" pathLength="1" fill="none" stroke="#FBB929" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;animation:stdDraw .7s ease-in-out 0.15s both"></path>
+<polygon points="590,382 585.1,370.5 577.6,379.9" fill="#FBB929" style="animation:stdIn .25s ease-out 0.75s both"></polygon>
+<polygon points="501,312 505.9,323.5 513.4,314.1" fill="#FBB929" style="animation:stdIn .25s ease-out 0.75s both"></polygon>
+<path d="M590 458L501 528" pathLength="1" fill="none" stroke="#FBB929" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;animation:stdDraw .7s ease-in-out 0.30s both"></path>
+<polygon points="501,528 513.4,525.9 505.9,516.5" fill="#FBB929" style="animation:stdIn .25s ease-out 0.90s both"></polygon>
+<polygon points="590,458 577.6,460.1 585.1,469.5" fill="#FBB929" style="animation:stdIn .25s ease-out 0.90s both"></polygon>
+<path d="M239 528L150 458" pathLength="1" fill="none" stroke="#FBB929" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray:1;stroke-dashoffset:1;animation:stdDraw .7s ease-in-out 0.45s both"></path>
+<polygon points="150,458 154.9,469.5 162.4,460.1" fill="#FBB929" style="animation:stdIn .25s ease-out 1.05s both"></polygon>
+<polygon points="239,528 234.1,516.5 226.6,525.9" fill="#FBB929" style="animation:stdIn .25s ease-out 1.05s both"></polygon>
+</svg>
+</sc-if>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:724px;top:272px;width:516px;height:296px;background:#3c3c3c;border-top:6px solid #FBB929;padding:18px 24px;display:flex;flex-direction:column;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.1s both">
+<sc-if value="{{ a21.none }}" hint-placeholder-val="{{ true }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">HOW TO EXPLORE</div>
+<div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty">Every perspective starts from <strong style="color:#fff">Vision &amp; Strategy</strong>. Click <strong style="color:#fff">Perspective 01</strong> to begin — the next one appears after each click.</div>
+</div></sc-if>
+<sc-if value="{{ a21.fin }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">PERSPECTIVE 01 / 04</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Financial Perspective</div>
+<div style="font:400 25px/1.35 ANC;color:#FBB929;text-wrap:pretty">“How do we look to our shareholders?”</div>
+</div></sc-if>
+<sc-if value="{{ a21.cus }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">PERSPECTIVE 02 / 04</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Customer Perspective</div>
+<div style="font:400 25px/1.35 ANC;color:#FBB929;text-wrap:pretty">“How do our customer see us?”</div>
+</div></sc-if>
+<sc-if value="{{ a21.int }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">PERSPECTIVE 03 / 04</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Internal Process Perspective</div>
+<div style="font:400 25px/1.35 ANC;color:#FBB929;text-wrap:pretty">“What process must excel at?”</div>
+</div></sc-if>
+<sc-if value="{{ a21.lg }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">PERSPECTIVE 04 / 04</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Learning &amp; Growth Perspective</div>
+<div style="font:400 25px/1.35 ANC;color:#FBB929;text-wrap:pretty">“How do we continue to improve &amp; create value?”</div>
+</div></sc-if>
+<sc-if value="{{ a21.vs }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s21 }}" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;animation:stdUp .35s cubic-bezier(.2,.7,.2,1) both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">PROCESS DEFINE KPI</div>
+<div style="display:flex;gap:10px;font:400 20px/1.3 ANC;color:#fff"><span style="flex:none;width:20px;color:#FBB929;font-weight:700">1.</span><span>Align with the corporate goals and vision</span></div>
+<div style="display:flex;gap:10px"><span style="flex:none;width:20px;font:700 20px/1.3 ANC;color:#FBB929">2.</span>
+<div style="display:flex;flex-direction:column;gap:4px;min-width:0"><div style="font:400 20px/1.3 ANC;color:#fff">Cascade to sub-ordinate:</div>
+<div style="display:flex;gap:8px;font:400 20px/1.3 ANC;color:#e2e2e2"><span style="flex:none;width:10px">·</span><span>Setting Key Performance Indicators (KPI) <strong style="color:#fff">(maximum 12 KPI, minimum weighting 5%)</strong></span></div>
+<div style="display:flex;gap:8px;font:400 20px/1.3 ANC;color:#e2e2e2"><span style="flex:none;width:10px">·</span><span>Setting Target</span></div>
+<div style="display:flex;gap:8px;font:400 20px/1.3 ANC;color:#e2e2e2"><span style="flex:none;width:10px">·</span><span>Individual Development Plan (IDP)</span></div>
+<div style="display:flex;gap:8px;font:400 20px/1.3 ANC;color:#e2e2e2"><span style="flex:none;width:10px">·</span><span>Monitoring and Tracking PMD Progress</span></div>
+</div></div>
+</div></sc-if>
+</div>
+<div style="position:absolute;left:724px;top:582px;width:440px;height:24px;display:flex;align-items:center;gap:14px;animation:stdIn .4s ease-out 0.2s both">
+<div style="display:flex;gap:6px;flex:none"><span style="width:14px;height:14px;display:block;background:{{ d21.fin }};border:2px solid #FBB929"></span><span style="width:14px;height:14px;display:block;background:{{ d21.cus }};border:2px solid #FBB929"></span><span style="width:14px;height:14px;display:block;background:{{ d21.int }};border:2px solid #FBB929"></span><span style="width:14px;height:14px;display:block;background:{{ d21.lg }};border:2px solid #FBB929"></span><span style="width:14px;height:14px;display:block;background:{{ d21.vs }};border:2px solid #FBB929"></span></div>
+<sc-if value="{{ a21.h1 }}" hint-placeholder-val="{{ true }}"><div style="font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .3s ease-out both">*Click each perspective in order to continue</div></sc-if>
+<sc-if value="{{ a21.h2 }}" hint-placeholder-val="{{ false }}"><div style="font:700 15px/1.3 ANC;color:#FBB929;animation:stdIn .3s ease-out both">Now click VISION &amp; STRATEGY ›</div></sc-if>
+<sc-if value="{{ a21.h3 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#a8a8a8;animation:stdIn .3s ease-out both">All perspectives aligned</div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s22 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">KPI Alignment in the PMD Process</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">KPI Alignment refers to a collaborative process involving OSM, HR, and CEG functions</div>
+</div>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:258px;width:1200px;display:flex;justify-content:space-between;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .4s ease-out 0s both"><span>*Follow the steps in order — click each step to see the details</span><span style="font:700 15px/1.3 ANC;color:#FBB929">{{ s22c }} / 6 steps viewed</span></div>
+</sc-if>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:288px;width:1200px;height:196px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.1.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.1.top }};background:{{ k22.1.bg }};opacity:{{ k22.1.op }};pointer-events:{{ k22.1.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.1.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">01</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Strategic Imperative</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.1.cc }}"><sc-if value="{{ k22.1.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.1.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+<span style="position:absolute;right:-20px;top:70px;width:16px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.2.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.2.top }};background:{{ k22.2.bg }};opacity:{{ k22.2.op }};pointer-events:{{ k22.2.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.2.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">02</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Preparation KPI Alignment</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.2.cc }}"><sc-if value="{{ k22.2.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.2.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+<span style="position:absolute;right:-20px;top:70px;width:16px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.3.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.3.top }};background:{{ k22.3.bg }};opacity:{{ k22.3.op }};pointer-events:{{ k22.3.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.3.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">03</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Cascade KPI to Chief Level &amp; L2</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.3.cc }}"><sc-if value="{{ k22.3.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.3.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+<span style="position:absolute;right:-20px;top:70px;width:16px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.4.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.4.top }};background:{{ k22.4.bg }};opacity:{{ k22.4.op }};pointer-events:{{ k22.4.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.4.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">04</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Collect Target KPI</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.4.cc }}"><sc-if value="{{ k22.4.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.4.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+<span style="position:absolute;right:-20px;top:70px;width:16px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.5.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.5.top }};background:{{ k22.5.bg }};opacity:{{ k22.5.op }};pointer-events:{{ k22.5.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.5.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">05</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Getting each Chief Approval</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.5.cc }}"><sc-if value="{{ k22.5.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.5.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+<span style="position:absolute;right:-20px;top:70px;width:16px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;display:flex">
+<button data-item="1" onClick="{{ k22.6.go }}" style="flex:1;position:relative;border:0;border-top:6px solid {{ k22.6.top }};background:{{ k22.6.bg }};opacity:{{ k22.6.op }};pointer-events:{{ k22.6.pe }};padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:background .2s,opacity .3s;animation:{{ k22.6.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="font:700 25px/1 ANC;color:#FBB929">06</div>
+<div style="flex:1;font:700 20px/1.3 ANC;color:#fff;text-wrap:pretty">Cascade KPI Corporate until Individual</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:{{ k22.6.cc }}"><sc-if value="{{ k22.6.seen }}" hint-placeholder-val="{{ false }}">VIEW AGAIN ›</sc-if><sc-if value="{{ k22.6.unseen }}" hint-placeholder-val="{{ true }}">SEE DETAILS ›</sc-if></div>
+</button>
+</div>
+</div>
+<div style="position:absolute;left:40px;top:504px;width:1120px;display:flex;justify-content:space-between;gap:24px;font:400 15px/1.35 ANC;color:#a8a8a8;animation:stdIn .4s ease-out 0.3s both">
+<div>* OSM: Office of Strategic Management, CEG: Central Expertise Group</div>
+<div>L1: Chief Level, L2: GM/Div Head Level</div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s23 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">The PMD Cycle Runs throughout the year</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Individual Performance Management (1 Year PMD Cycle)</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:56px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<button data-item="1" onClick="{{ p23b.onClick }}" style="grid-column:1 / span 2;height:56px;border:2px solid {{ p23b.bd }};background:{{ p23b.bg }};color:{{ p23b.fg }};font:700 25px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,color .2s;animation:{{ p23b.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">Beginning of the year</button>
+<button data-item="1" onClick="{{ p23m.onClick }}" style="grid-column:3 / span 1;height:56px;border:2px solid {{ p23m.bd }};background:{{ p23m.bg }};color:{{ p23m.fg }};font:700 25px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,color .2s;animation:{{ p23m.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">Mid year</button>
+<button data-item="1" onClick="{{ p23e.onClick }}" style="grid-column:4 / span 4;height:56px;border:2px solid {{ p23e.bd }};background:{{ p23e.bg }};color:{{ p23e.fg }};font:700 25px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,color .2s;animation:{{ p23e.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">End of the year</button>
+</div>
+<div style="position:absolute;left:40px;top:332px;width:1200px;height:10px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;animation:stdIn .4s ease-out 0.2s both">
+<sc-for list="{{ s23b }}" as="b" hint-placeholder-count="3"><div style="grid-column:{{ b.col }};border:2px solid {{ b.c }};border-top:0;height:10px;transition:border-color .3s"></div></sc-for>
+</div>
+<div style="position:absolute;left:40px;top:376px;width:1200px;height:4px;background:#3a3a3a;animation:odWipe .6s ease-out .2s both"></div>
+<div style="position:absolute;left:40px;top:354px;width:1200px;height:150px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;animation:stdIn .4s ease-out 0.3s both">
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.1.bg }};border:2px solid {{ n23.1.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.1.fg }};transition:background .3s,border-color .3s,color .3s">1</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.1.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.1.op }};transform:translateY({{ n23.1.ty }}px);transition:opacity .4s ease {{ n23.1.dl }}s,transform .4s ease {{ n23.1.dl }}s">Target KPI and IDP Setting</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.2.bg }};border:2px solid {{ n23.2.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.2.fg }};transition:background .3s,border-color .3s,color .3s">2</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.2.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.2.op }};transform:translateY({{ n23.2.ty }}px);transition:opacity .4s ease {{ n23.2.dl }}s,transform .4s ease {{ n23.2.dl }}s">Target KPI and IDP Setting Approval</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.3.bg }};border:2px solid {{ n23.3.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.3.fg }};transition:background .3s,border-color .3s,color .3s">3</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.3.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.3.op }};transform:translateY({{ n23.3.ty }}px);transition:opacity .4s ease {{ n23.3.dl }}s,transform .4s ease {{ n23.3.dl }}s">Performance Review by Employee</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.4.bg }};border:2px solid {{ n23.4.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.4.fg }};transition:background .3s,border-color .3s,color .3s">4</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.4.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.4.op }};transform:translateY({{ n23.4.ty }}px);transition:opacity .4s ease {{ n23.4.dl }}s,transform .4s ease {{ n23.4.dl }}s">Year End Performance Review by Superior and 1:1 Meeting</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.5.bg }};border:2px solid {{ n23.5.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.5.fg }};transition:background .3s,border-color .3s,color .3s">5</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.5.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.5.op }};transform:translateY({{ n23.5.ty }}px);transition:opacity .4s ease {{ n23.5.dl }}s,transform .4s ease {{ n23.5.dl }}s">Performance Appraisal Approval</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.6.bg }};border:2px solid {{ n23.6.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.6.fg }};transition:background .3s,border-color .3s,color .3s">6</div>
+<span style="position:absolute;right:-14px;top:9px;font:700 25px/1 ANC;color:{{ n23.6.ac }};transition:color .3s">›</span>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.6.op }};transform:translateY({{ n23.6.ty }}px);transition:opacity .4s ease {{ n23.6.dl }}s,transform .4s ease {{ n23.6.dl }}s">Calibration</div>
+</div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:10px">
+<div style="width:48px;height:48px;background:{{ n23.7.bg }};border:2px solid {{ n23.7.bd }};display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:{{ n23.7.fg }};transition:background .3s,border-color .3s,color .3s">7</div>
+<div style="font:400 20px/1.3 ANC;color:#fff;text-align:center;text-wrap:balance;opacity:{{ n23.7.op }};transform:translateY({{ n23.7.ty }}px);transition:opacity .4s ease {{ n23.7.dl }}s,transform .4s ease {{ n23.7.dl }}s">Completion</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<sc-if value="{{ s23h }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;left:40px;top:510px;width:1120px;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .4s ease-out both">*Click each period from left to right to reveal its steps</div></sc-if>
+</sc-if>
+<sc-if value="{{ s23cal }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:40px;top:538px;width:1120px;min-height:44px;background:#3c3c3c;border-left:5px solid #C8442E;display:flex;align-items:center;gap:16px;padding:6px 20px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) .6s both">
+<div style="width:30px;height:30px;flex:none;background:#C8442E;color:#fff;font:700 25px/1 ANC;display:flex;align-items:center;justify-content:center">!</div>
+<div style="font:400 20px/1.35 ANC;color:#e2e2e2"><strong style="color:#fff">Calibration (if any)</strong> is decided by the Board of Directors based on organizational and employee performance</div>
+</div></sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s24 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717;text-wrap:balance">Completed PMD Results will be used for other HR processes such as Talent Management, Development Programs, etc.</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:284px;width:1200px;height:224px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px">
+<div style="position:relative;display:flex;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<button data-item="1" onClick="{{ r24l.go }}" style="flex:1;position:relative;border:0;border-top:6px solid #FBB929;background:#3c3c3c;padding:28px 32px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;animation:{{ r24l.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#a8a8a8">ROLE OF</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Leader/Superior</div>
+</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:#FBB929">SEE PMD CYCLE ›</div>
+<div style="position:absolute;right:32px;top:29px;width:160px;height:160px;animation:stdIn .45s ease-out 0.25s both"><image-slot id="pmd-ilus-sl24-leader" src="assets/pmd/pmd-ilus-sl24-leader.png" shape="rect" fit="contain" placeholder="Leader / superior illustration"></image-slot></div>
+</button>
+</div>
+<div style="position:relative;display:flex;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.2s both">
+<button data-item="1" onClick="{{ r24e.go }}" style="flex:1;position:relative;border:0;border-top:6px solid #FBB929;background:#3c3c3c;padding:28px 32px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;animation:{{ r24e.anim }}" style-hover="outline:2px solid #FBB929;outline-offset:-2px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#a8a8a8">ROLE OF</div>
+<div style="font:700 25px/1.3 ANC;color:#fff">Employee</div>
+</div>
+<div style="font:700 15px/1.3 ANC;letter-spacing:.08em;color:#FBB929">SEE PMD CYCLE ›</div>
+<div style="position:absolute;right:32px;top:29px;width:160px;height:160px;animation:stdIn .45s ease-out 0.45s both"><image-slot id="pmd-ilus-sl24-employee" shape="rect" fit="contain" src="assets/ir/ir-ilus-sl14-worker_v1.1.png" placeholder="Employee illustration"></image-slot></div>
+</button>
+</div>
+</div>
+<div style="position:absolute;left:40px;top:532px;width:1040px;font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif;color:#a8a8a8;animation:stdIn .4s ease-out 0.4s both">*Click each Role button to see the PMD Cycle for that role</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s27 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Performance Improvement Plan</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">PIP is process that focuses on finding solutions for performance and working behavior issues</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:368px;height:296px;overflow:hidden;animation:stdIn .4s ease-out 0s both"><image-slot id="ilus-sl27" shape="rect" placeholder="Thinking character illustration"></image-slot></div>
+<div style="position:absolute;left:432px;top:272px;width:336px;height:296px;background:#FBB929;padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) .15s both">
+<div style="font:700 25px/1.3 ANC;color:#171717;text-wrap:pretty">What actions can be taken when employee underperformance or behavioral issues persist even after coaching in PMD?</div>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<button data-item="1" onClick="{{ s27.go }}" style="align-self:flex-start;height:52px;padding:0 24px;border:2px solid #171717;background:{{ s27.bg }};color:{{ s27.fg }};pointer-events:{{ s27.pe }};font:700 25px/1 ANC;cursor:pointer;transition:background .2s,color .2s;animation:{{ s27.anim }}" style-hover="background:#FBB929;color:#171717"><sc-if value="{{ s27.hidden }}" hint-placeholder-val="{{ true }}">SEE ACTIONS ›</sc-if><sc-if value="{{ s27.shown }}" hint-placeholder-val="{{ false }}">ACTIONS SHOWN</sc-if></button>
+</sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:792px;top:272px;width:448px;height:296px;background:#3c3c3c;border-top:6px solid #FBB929;padding:20px 24px;display:flex;flex-direction:column;gap:16px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.1s both">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">THE LEADER CAN TAKE THE FOLLOWING ACTIONS:</div>
+<sc-if value="{{ s27.hidden }}" hint-placeholder-val="{{ true }}"><div data-out="{{ out.s27 }}" style="flex:1;border:2px dashed #6f6f6f;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 24px;font:400 20px/1.35 ANC;color:#a8a8a8">Click SEE ACTIONS to reveal the Leader’s steps</div></sc-if>
+<sc-if value="{{ s27.a1 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:16px;align-items:flex-start;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><div style="width:44px;height:44px;flex:none;background:#FBB929;display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:#171717">1</div><div style="font:400 20px/1.4 ANC;color:#e2e2e2"><strong style="color:#fff">Consults with HR</strong> to arrange the issuance of a Performance Improvement Plan (PIP) form</div></div></sc-if>
+<sc-if value="{{ s27.a2 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:16px;align-items:flex-start;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><div style="width:44px;height:44px;flex:none;background:#FBB929;display:flex;align-items:center;justify-content:center;font:700 25px/1 ANC;color:#171717">2</div><div style="font:400 20px/1.4 ANC;color:#e2e2e2"><strong style="color:#fff">Discuss with employee</strong> and agreed the PIP plan for 6 months</div></div></sc-if>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s28 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Performance Improvement Plan</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Route Map for 6 months PIP process, PIP can be extended if it has not met the target</div>
+</div>
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:56px;display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:8px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0s both">
+<button data-item="1" onClick="{{ t28.t1.go }}" style="grid-column:1 / span 5;height:56px;border:2px solid {{ t28.t1.bd }};background:{{ t28.t1.bg }};color:{{ t28.t1.fg }};font:700 25px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,color .2s;animation:{{ t28.t1.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">MONTH 1–5</button>
+<button data-item="1" onClick="{{ t28.t2.go }}" style="grid-column:6 / span 6;height:56px;border:2px solid {{ t28.t2.bd }};background:{{ t28.t2.bg }};color:{{ t28.t2.fg }};font:700 25px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .2s,color .2s;animation:{{ t28.t2.anim }}" style-hover="background:#171717;color:#FBB929;border-color:#FBB929">MONTH 6<sc-if value="{{ t28.t2.mk }}" hint-placeholder-val="{{ false }}"><span style="font:700 15px/1 ANC">›</span></sc-if></button>
+</div>
+<sc-if value="{{ a28.t1 }}" hint-placeholder-val="{{ true }}"><div data-out="{{ out.s28 }}" style="position:absolute;left:40px;top:344px;width:1200px;height:220px;display:flex;gap:22px">
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.00s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">01</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Launch PIP Form</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#FBB929;color:#171717;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Respective HR</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.10s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">02</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Discuss, Create and Agreed Goal &amp; Task plan for 6 months</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Superior &amp; Employee</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.20s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">03</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Approve PIP</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Next Inline Superior</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.30s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">04</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Sign for Acknowledge PIP Implementation</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#FBB929;color:#171717;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Respective HR</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.40s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">05</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Review &amp; Update Achievement Progress on monthly basis</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Superior &amp; Employee</div>
+</div>
+</div>
+</div></sc-if>
+<sc-if value="{{ a28.t2 }}" hint-placeholder-val="{{ false }}"><div data-out="{{ out.s28 }}" style="position:absolute;left:40px;top:344px;width:1200px;height:220px;display:flex;gap:22px">
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.00s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">06</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Assess PIP Achievement</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Superior</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.10s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">07</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Approve PIP Outcome</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Next Inline Superior</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.20s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">08</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Sign for Acknowledge PIP Outcome</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Employee</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.30s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">09</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Sign for PIP Final Outcome</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#171717;color:#FBB929;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Superior</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.40s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">10</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">Sign for Acknowledge PIP Outcome</div>
+<div style="height:46px;flex:none;display:flex;align-items:center;padding:0 8px;background:#FBB929;color:#171717;border:2px solid #FBB929;font:700 15px/1.3 ANC">by Respective HR</div>
+</div>
+<span style="position:absolute;right:-18px;top:90px;width:14px;font:700 25px/1 ANC;color:#FBB929;text-align:center">›</span>
+</div>
+<div style="position:relative;width:181.67px;height:220px;flex:none;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.50s both"><div style="height:220px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+<div style="font:700 25px/1 ANC;color:#FBB929">11</div>
+<div style="flex:1;font:400 20px/1.3 ANC;color:#fff;text-wrap:pretty">PIP Completed — can be downloaded in pdf format</div>
+<div style="height:46px;flex:none"></div>
+</div>
+</div>
+</div></sc-if>
+</sc-if>
+<sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:580px;width:1040px;display:flex;justify-content:flex-start;align-items:center;gap:24px;font:400 15px/1.3 ANC;color:#a8a8a8;animation:stdIn .4s ease-out 0s both"><span style="display:flex;align-items:center;gap:8px"><span style="width:16px;height:16px;background:#FBB929;display:block"></span>Step by Respective HR</span><sc-if value="{{ a28.hint }}" hint-placeholder-val="{{ true }}"><span style="font:italic 400 15px/1.3 ANCI,'Arial Narrow',sans-serif">Next: click MONTH 6 to continue the route ›</span></sc-if></div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ is.s29 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">PMD Wrap Up</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">PMD functions as a tool to ensure the achievement of both company and employee performance.</div>
+</div>
+<div style="position:absolute;left:40px;top:266px;width:1200px;display:flex;flex-direction:column;gap:10px">
+<div style="height:20px"><sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929;animation:stdIn .4s ease-out both">PMD CONSISTS OF THREE MAJOR PROCESSES:</div>
+</sc-if></div>
+<div style="height:148px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+<sc-if value="{{ cu.c3 }}" hint-placeholder-val="{{ true }}">
+<div style="position:relative;height:148px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><div style="height:148px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 22px;display:flex;flex-direction:column;gap:6px"><div style="height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px"><div style="font:700 25px/1.3 ANC;color:#FBB929">Beginning of the Year</div><div style="width:44px;height:44px;flex:none;animation:stdIn .4s ease-out .2s both"><image-slot id="pmd-ikon-siklus-awal-sl29" src="assets/pmd/pmd-ikon-siklus-awal.png" shape="rect" fit="contain" placeholder="Icon — beginning"></image-slot></div></div><div style="font:400 20px/1.35 ANC;color:#e2e2e2">Setting KPI Target and Development</div></div></div>
+</sc-if>
+<sc-if value="{{ cu.c4 }}" hint-placeholder-val="{{ true }}">
+<div style="position:relative;height:148px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><span style="position:absolute;left:-19px;top:56px;font:700 25px/1 ANC;color:#FBB929">›</span><div style="height:148px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 22px;display:flex;flex-direction:column;gap:6px"><div style="height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px"><div style="font:700 25px/1.3 ANC;color:#FBB929">Mid-Year</div><div style="width:44px;height:44px;flex:none;animation:stdIn .4s ease-out .2s both"><image-slot id="pmd-ikon-siklus-tengah-sl29" src="assets/pmd/pmd-ikon-siklus-tengah.png" shape="rect" fit="contain" placeholder="Icon — mid year"></image-slot></div></div><div style="font:400 20px/1.35 ANC;color:#e2e2e2">Review and Monitoring Progress, Coaching, Feedback</div></div></div>
+</sc-if>
+<sc-if value="{{ cu.c5 }}" hint-placeholder-val="{{ true }}">
+<div style="position:relative;height:148px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><span style="position:absolute;left:-19px;top:56px;font:700 25px/1 ANC;color:#FBB929">›</span><div style="height:148px;background:#3c3c3c;border-top:6px solid #FBB929;padding:12px 22px;display:flex;flex-direction:column;gap:6px"><div style="height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px"><div style="font:700 25px/1.3 ANC;color:#FBB929">End of the Year</div><div style="width:44px;height:44px;flex:none;animation:stdIn .4s ease-out .2s both"><image-slot id="pmd-ikon-siklus-akhir-sl29" src="assets/pmd/pmd-ikon-siklus-akhir.png" shape="rect" fit="contain" placeholder="Icon — end of year"></image-slot></div></div><div style="font:400 20px/1.35 ANC;color:#e2e2e2">PMD Performance Appraisal</div></div></div>
+</sc-if>
+</div>
+<div style="height:20px;margin-top:8px"><sc-if value="{{ cu.c6 }}" hint-placeholder-val="{{ true }}">
+<div style="font:400 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929;animation:stdIn .4s ease-out both">CORE PRINCIPLES OF PMD (THE SOUL OF PMD):</div>
+</sc-if></div>
+<div style="height:76px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+<sc-if value="{{ cu.c7 }}" hint-placeholder-val="{{ true }}">
+<div style="height:76px;background:#3a3a3a;border-left:5px solid #FBB929;padding:0 20px;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#fff;animation:odWipe .45s ease-out both">Two-way communication between leaders and employees</div>
+</sc-if>
+<sc-if value="{{ cu.c8 }}" hint-placeholder-val="{{ true }}">
+<div style="height:76px;background:#3a3a3a;border-left:5px solid #FBB929;padding:0 20px;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#fff;animation:odWipe .45s ease-out both">Regular coaching and feedback sessions</div>
+</sc-if>
+<sc-if value="{{ cu.c9 }}" hint-placeholder-val="{{ true }}">
+<div style="height:76px;background:#3a3a3a;border-left:5px solid #FBB929;padding:0 20px;display:flex;align-items:center;font:400 20px/1.35 ANC;color:#fff;animation:odWipe .45s ease-out both">Continuous performance and development monitoring</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ is.s30 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;justify-content:center;gap:6px">
+<div style="font:700 38px/1.2 ANC;color:#171717">PMD Module Wrap Up</div>
+<div style="font:400 25px/1.3 ANC;color:#171717">Key Actions</div>
+</div>
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:296px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+<sc-if value="{{ cu.c1 }}" hint-placeholder-val="{{ true }}">
+<div style="height:296px;background:#3c3c3c;border-top:6px solid #FBB929;position:relative;padding:26px 22px 18px;display:flex;flex-direction:column;gap:12px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.00s both"><div style="position:absolute;right:18px;top:2px;width:64px;height:64px;animation:stdIn .4s ease-out 0.20s both"><image-slot id="pmd-ikon-sl30-1" src="assets/pmd/pmd-ikon-sl30-1.png" shape="rect" fit="contain" placeholder="Icon — record discussions"></image-slot></div><div style="font:700 38px/1 ANC;color:#FBB929">01</div><sc-if value="{{ cu.c2 }}" hint-placeholder-val="{{ true }}">
+<div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><strong style="color:#fff">Record discussions</strong> on performance and development between leaders/superiors and employees in Continuous Performance and Feedback for monitoring purposes.</div>
+</sc-if></div>
+<div style="height:296px;background:#3c3c3c;border-top:6px solid #FBB929;position:relative;padding:26px 22px 18px;display:flex;flex-direction:column;gap:12px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.15s both"><div style="position:absolute;right:18px;top:2px;width:64px;height:64px;animation:stdIn .4s ease-out 0.35s both"><image-slot id="pmd-ikon-sl30-2" src="assets/pmd/pmd-ikon-sl30-2.png" shape="rect" fit="contain" placeholder="Icon — consult HR"></image-slot></div><div style="font:700 38px/1 ANC;color:#FBB929">02</div><sc-if value="{{ cu.c3 }}" hint-placeholder-val="{{ true }}">
+<div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><b style="color: #FFFFFF">Leader can</b> <strong style="color: rgb(255, 255, 255);">consults with HR</strong> to arrange the issuance of a Performance Improvement Plan (PIP) when employee underperformance or behavioral issues persist even after coaching</div>
+</sc-if></div>
+<div style="height:296px;background:#3c3c3c;border-top:6px solid #FBB929;position:relative;padding:26px 22px 18px;display:flex;flex-direction:column;gap:12px;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) 0.30s both"><div style="position:absolute;right:18px;top:2px;width:64px;height:64px;animation:stdIn .4s ease-out 0.50s both"><image-slot id="pmd-ikon-sl30-3" src="assets/pmd/pmd-ikon-sl30-3.png" shape="rect" fit="contain" placeholder="Icon — use PMD data"></image-slot></div><div style="font:700 38px/1 ANC;color:#FBB929">03</div><sc-if value="{{ cu.c4 }}" hint-placeholder-val="{{ true }}">
+<div style="font:400 20px/1.4 ANC;color:#e2e2e2;text-wrap:pretty;animation:stdUp .4s cubic-bezier(.2,.7,.2,1) both"><strong style="color: rgb(255, 255, 255);">Use PMD data</strong> <b style="color: #FFFFFF">as supporting</b> information for other HR processes, such as Talent Management, Development, and others.</div>
+</sc-if></div>
+</sc-if>
+</div>
+<sc-if value="{{ cu.c5 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:596px;display:flex;align-items:center;gap:12px;animation:stdIn .4s ease-out both">
+<button data-item="1" onClick="{{ toPmdHome }}" style="height:36px;padding:0 20px;border:2px solid #FBB929;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em;cursor:pointer" style-hover="background:#171717;color:#FBB929">BACK TO PMD HOME</button>
+<div style="font:400 15px/1.3 ANC;color:#d7d7d7">Click <strong style="color:#FBB929">Menu</strong> to return to the Main Hub.</div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ nav.prev }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ prev }}" aria-label="Previous" style="position:absolute;left:1103px;top:588px;width:56px;height:57px;padding:0;border:0;background:none;cursor:pointer"><img src="assets/btn-prev.png" alt="Previous" style="width:56px;height:57px;display:block"></button>
+</sc-if>
+<sc-if value="{{ nav.next }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ next }}" aria-label="Next" data-std="next" style="position:absolute;left:1187px;top:588px;width:56px;height:56px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;animation:stdNext .3s cubic-bezier(.2,.7,.2,1) both, odPulse 1.6s ease-in-out .3s 2"><img src="assets/btn-next.png" alt="Next" style="width:56px;height:56px;display:block"></button>
+</sc-if>
+
+<sc-if value="{{ hub.on }}" hint-placeholder-val="{{ false }}">
+<div data-layer="hub" style="position:absolute;left:0;top:0;width:1280px;height:671px">
+<div data-screen-label="Main Hub" style="position:absolute;left:0;top:80px;width:1280px;height:591px;background:#FBB929;animation:fi .25s ease both"></div>
+<div style="position:absolute;left:0;top:244px;width:1280px;height:421px;background:#171717"></div>
+<div style="position:absolute;left:40px;top:80px;width:1200px;height:164px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+<div style="font:700 38px/1.2 ANC;color:#171717">Process HR Learning Module</div>
+<div style="display:flex;gap:12px">
+<button onClick="{{ hubTabHub }}" style="height:40px;width:200px;border:2px solid #171717;background:{{ hub.th.bg }};color:{{ hub.th.fg }};font:700 15px/1 ANC;letter-spacing:.1em;cursor:pointer" style-hover="background:#171717;color:#FBB929">MAIN HUB</button>
+<button onClick="{{ hubTabSlides }}" style="height:40px;width:200px;border:2px solid #171717;background:{{ hub.ts.bg }};color:{{ hub.ts.fg }};font:700 15px/1 ANC;letter-spacing:.1em;cursor:pointer" style-hover="background:#171717;color:#FBB929">MODULE SLIDES</button>
+</div>
+</div>
+<sc-if value="{{ hub.tabHub }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:40px;top:272px;width:1200px;height:296px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:24px">
+<div title="{{ hub.c01.tip }}" style="position:relative;display:flex;animation:fu .35s ease both"><button onClick="{{ hub.c01.go }}" aria-label="Organization Design" style="flex:1;border:2px {{ hub.c01.bs }} {{ hub.c01.bd }};background:{{ hub.c01.bg }};opacity:{{ hub.c01.op }};pointer-events:{{ hub.c01.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c01.ey }}">MODULE 01</span><sc-if value="{{ hub.c01.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c01.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c01.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c01.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c01.fg }}">Organization Design</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c01.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 48 48" fill="none" stroke="#FBB929" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="13" r="7" stroke-width="4" stroke-dasharray="3.4 2.6"></circle><circle cx="24" cy="13" r="3"></circle><circle cx="13" cy="30" r="4"></circle><path d="M5 43c0-5 4-8 8-8s8 3 8 8"></path><circle cx="35" cy="30" r="4"></circle><path d="M27 43c0-5 4-8 8-8s8 3 8 8"></path></svg></div></div></div>
+<div title="{{ hub.c02.tip }}" style="position:relative;display:flex;animation:fu .35s .05s ease both"><button onClick="{{ hub.c02.go }}" aria-label="Reward Management" style="flex:1;border:2px {{ hub.c02.bs }} {{ hub.c02.bd }};background:{{ hub.c02.bg }};opacity:{{ hub.c02.op }};pointer-events:{{ hub.c02.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c02.ey }}">MODULE 02</span><sc-if value="{{ hub.c02.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c02.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c02.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c02.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c02.fg }}">Reward Management</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c02.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M12 6v4M10.5 7.2h2.2a.9.9 0 0 1 0 1.8"></path><path d="M3 20l3-3h4l2 1h5l3-3"></path></svg></div></div></div>
+<div title="{{ hub.c03.tip }}" style="position:relative;display:flex;animation:fu .35s .1s ease both"><button onClick="{{ hub.c03.go }}" aria-label="Recruitment and Onboarding" style="flex:1;border:2px {{ hub.c03.bs }} {{ hub.c03.bd }};background:{{ hub.c03.bg }};opacity:{{ hub.c03.op }};pointer-events:{{ hub.c03.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c03.ey }}">MODULE 03</span><sc-if value="{{ hub.c03.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c03.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c03.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c03.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c03.fg }}">Recruitment &amp; Onboarding</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c03.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M19 8v6"></path><path d="M16 11h6"></path></svg></div></div></div>
+<div title="{{ hub.c04.tip }}" style="position:relative;display:flex;animation:fu .35s .15s ease both"><button onClick="{{ hub.c04.go }}" aria-label="Performance Management" style="flex:1;border:2px {{ hub.c04.bs }} {{ hub.c04.bd }};background:{{ hub.c04.bg }};opacity:{{ hub.c04.op }};pointer-events:{{ hub.c04.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c04.ey }}">MODULE 04</span><sc-if value="{{ hub.c04.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c04.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c04.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c04.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c04.fg }}">Performance Management</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c04.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.5"></circle><circle cx="17" cy="6" r="2.5"></circle><path d="M3 14a4 4 0 0 1 8 0"></path><path d="M13 14a4 4 0 0 1 8 0"></path><path d="M2 17h20"></path><path d="M6 17v4M18 17v4"></path></svg></div></div></div>
+<div title="{{ hub.c05.tip }}" style="position:relative;display:flex;animation:fu .35s .2s ease both"><button onClick="{{ hub.c05.go }}" aria-label="Talent Management" style="flex:1;border:2px {{ hub.c05.bs }} {{ hub.c05.bd }};background:{{ hub.c05.bg }};opacity:{{ hub.c05.op }};pointer-events:{{ hub.c05.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c05.ey }}">MODULE 05</span><sc-if value="{{ hub.c05.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c05.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c05.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c05.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c05.fg }}">Talent Management</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c05.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.8l1.05 2.15 2.35.33-1.7 1.66.4 2.34L12 7.17 9.9 8.28l.4-2.34-1.7-1.66 2.35-.33z"></path><circle cx="7" cy="12" r="2.4"></circle><circle cx="17" cy="12" r="2.4"></circle><path d="M2.5 21v-1.2A3.6 3.6 0 0 1 6.1 16.2h1.8a3.6 3.6 0 0 1 3.6 3.6V21"></path><path d="M12.5 21v-1.2a3.6 3.6 0 0 1 3.6-3.6h1.8a3.6 3.6 0 0 1 3.6 3.6V21"></path></svg></div></div></div>
+<div title="{{ hub.c06.tip }}" style="position:relative;display:flex;animation:fu .35s .25s ease both"><button onClick="{{ hub.c06.go }}" aria-label="Learning and Development" style="flex:1;border:2px {{ hub.c06.bs }} {{ hub.c06.bd }};background:{{ hub.c06.bg }};opacity:{{ hub.c06.op }};pointer-events:{{ hub.c06.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c06.ey }}">MODULE 06</span><sc-if value="{{ hub.c06.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c06.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c06.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c06.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c06.fg }}">Learning &amp; Development</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c06.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"></path><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"></path></svg></div></div></div>
+<div title="{{ hub.c07.tip }}" style="position:relative;display:flex;animation:fu .35s .3s ease both"><button onClick="{{ hub.c07.go }}" aria-label="Industrial Relation" style="flex:1;border:2px {{ hub.c07.bs }} {{ hub.c07.bd }};background:{{ hub.c07.bg }};opacity:{{ hub.c07.op }};pointer-events:{{ hub.c07.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c07.ey }}">MODULE 07</span><sc-if value="{{ hub.c07.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c07.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c07.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c07.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c07.fg }}">Industrial Relation</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c07.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"></path><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"></path><path d="m21 3 1 11h-2"></path><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"></path><path d="M3 4h8"></path></svg></div></div></div>
+<div title="{{ hub.c08.tip }}" style="position:relative;display:flex;animation:fu .35s .35s ease both"><button onClick="{{ hub.c08.go }}" aria-label="Exit Management" style="flex:1;border:2px {{ hub.c08.bs }} {{ hub.c08.bd }};background:{{ hub.c08.bg }};opacity:{{ hub.c08.op }};pointer-events:{{ hub.c08.pe }};padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;text-align:left;transition:background .2s" style-hover="border-color:#FFFFFF"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font:700 15px/1 ANC;letter-spacing:.08em;color:{{ hub.c08.ey }}">MODULE 08</span><sc-if value="{{ hub.c08.done }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#FBB929;color:#171717;font:700 15px/1 ANC;letter-spacing:.06em">✓ DONE</span></sc-if><sc-if value="{{ hub.c08.locked }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px solid #8d8d8d;color:#bdbdbd;font:700 15px/1 ANC;letter-spacing:.06em">LOCKED</span></sc-if><sc-if value="{{ hub.c08.soon }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;border:2px dashed #6f6f6f;color:#a8a8a8;font:700 15px/1 ANC;letter-spacing:.06em">COMING SOON</span></sc-if><sc-if value="{{ hub.c08.open }}" hint-placeholder-val="{{ false }}"><span style="height:24px;padding:0 8px;display:flex;align-items:center;white-space:nowrap;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:.06em">START ›</span></sc-if></div><span style="padding-left:60px;min-height:65px;display:flex;align-items:center;font:700 25px/1.3 ANC;color:{{ hub.c08.fg }}">Exit Management</span></button><div style="position:absolute;left:18px;bottom:18px;width:48px;height:48px;opacity:{{ hub.c08.op }}"><div style="width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#f1f1f1 55%,#cfcfcf 100%);box-shadow:0 2px 4px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E0A21C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h3a2 2 0 0 1 2 2v14"></path><path d="M2 20h3"></path><path d="M13 20h9"></path><path d="M10 12v.01"></path><path d="M13 4.56v16.16a1 1 0 0 1-1.24.97L5 20V5.56a2 2 0 0 1 1.52-1.94l4-1A2 2 0 0 1 13 4.56z"></path></svg></div></div></div>
+</div>
+<div style="position:absolute;left:40px;top:596px;width:1040px;font:400 15px/1.3 ANC;color:#a8a8a8">*Complete each module in order to unlock the next one. Modules marked COMING SOON are skipped.</div>
+</sc-if>
+<sc-if value="{{ hub.tabSlides }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:40px;top:268px;font:700 15px/1.3 ANC;letter-spacing:.12em;color:#FBB929">MODULE 04 · PERFORMANCE MANAGEMENT · 15 SLIDES</div>
+<div style="position:absolute;left:40px;top:300px;width:1200px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:44px;gap:10px 16px">
+<button onClick="{{ ms.s01.go }}" style="border:2px solid {{ ms.s01.bd }};background:{{ ms.s01.bg }};color:{{ ms.s01.fg }};opacity:{{ ms.s01.op }};pointer-events:{{ ms.s01.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s01.cc }};flex:none">SL-01</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Home</span></button>
+<button onClick="{{ ms.s02.go }}" style="border:2px solid {{ ms.s02.bd }};background:{{ ms.s02.bg }};color:{{ ms.s02.fg }};opacity:{{ ms.s02.op }};pointer-events:{{ ms.s02.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s02.cc }};flex:none">SL-02</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">What is PMD</span></button>
+<button onClick="{{ ms.s03.go }}" style="border:2px solid {{ ms.s03.bd }};background:{{ ms.s03.bg }};color:{{ ms.s03.fg }};opacity:{{ ms.s03.op }};pointer-events:{{ ms.s03.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s03.cc }};flex:none">SL-03</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Role question</span></button>
+<button onClick="{{ ms.s04.go }}" style="border:2px solid {{ ms.s04.bd }};background:{{ ms.s04.bg }};color:{{ ms.s04.fg }};opacity:{{ ms.s04.op }};pointer-events:{{ ms.s04.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s04.cc }};flex:none">SL-04</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Role of Non-HR Leaders</span></button>
+<button onClick="{{ ms.s05.go }}" style="border:2px solid {{ ms.s05.bd }};background:{{ ms.s05.bg }};color:{{ ms.s05.fg }};opacity:{{ ms.s05.op }};pointer-events:{{ ms.s05.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s05.cc }};flex:none">SL-05</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Employee Exp. Journey</span></button>
+<button onClick="{{ ms.s19.go }}" style="border:2px solid {{ ms.s19.bd }};background:{{ ms.s19.bg }};color:{{ ms.s19.fg }};opacity:{{ ms.s19.op }};pointer-events:{{ ms.s19.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s19.cc }};flex:none">SL-19</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PMD position in EEJ</span></button>
+<button onClick="{{ ms.s20.go }}" style="border:2px solid {{ ms.s20.bd }};background:{{ ms.s20.bg }};color:{{ ms.s20.fg }};opacity:{{ ms.s20.op }};pointer-events:{{ ms.s20.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s20.cc }};flex:none">SL-20</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PMD benefits</span></button>
+<button onClick="{{ ms.s21.go }}" style="border:2px solid {{ ms.s21.bd }};background:{{ ms.s21.bg }};color:{{ ms.s21.fg }};opacity:{{ ms.s21.op }};pointer-events:{{ ms.s21.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s21.cc }};flex:none">SL-21</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Balanced Scorecard</span></button>
+<button onClick="{{ ms.s22.go }}" style="border:2px solid {{ ms.s22.bd }};background:{{ ms.s22.bg }};color:{{ ms.s22.fg }};opacity:{{ ms.s22.op }};pointer-events:{{ ms.s22.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s22.cc }};flex:none">SL-22</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KPI Alignment</span></button>
+<button onClick="{{ ms.s23.go }}" style="border:2px solid {{ ms.s23.bd }};background:{{ ms.s23.bg }};color:{{ ms.s23.fg }};opacity:{{ ms.s23.op }};pointer-events:{{ ms.s23.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s23.cc }};flex:none">SL-23</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PMD Cycle</span></button>
+<button onClick="{{ ms.s24.go }}" style="border:2px solid {{ ms.s24.bd }};background:{{ ms.s24.bg }};color:{{ ms.s24.fg }};opacity:{{ ms.s24.op }};pointer-events:{{ ms.s24.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s24.cc }};flex:none">SL-24</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Role per PMD Cycle</span></button>
+<button onClick="{{ ms.s27.go }}" style="border:2px solid {{ ms.s27.bd }};background:{{ ms.s27.bg }};color:{{ ms.s27.fg }};opacity:{{ ms.s27.op }};pointer-events:{{ ms.s27.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s27.cc }};flex:none">SL-27</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Perf. Improvement Plan</span></button>
+<button onClick="{{ ms.s28.go }}" style="border:2px solid {{ ms.s28.bd }};background:{{ ms.s28.bg }};color:{{ ms.s28.fg }};opacity:{{ ms.s28.op }};pointer-events:{{ ms.s28.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s28.cc }};flex:none">SL-28</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PIP Route Map</span></button>
+<button onClick="{{ ms.s29.go }}" style="border:2px solid {{ ms.s29.bd }};background:{{ ms.s29.bg }};color:{{ ms.s29.fg }};opacity:{{ ms.s29.op }};pointer-events:{{ ms.s29.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s29.cc }};flex:none">SL-29</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PMD Wrap Up</span></button>
+<button onClick="{{ ms.s30.go }}" style="border:2px solid {{ ms.s30.bd }};background:{{ ms.s30.bg }};color:{{ ms.s30.fg }};opacity:{{ ms.s30.op }};pointer-events:{{ ms.s30.pe }};padding:0 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;min-width:0" style-hover="border-color:#FBB929"><span style="font:700 15px/1 ANC;letter-spacing:.06em;color:{{ ms.s30.cc }};flex:none">SL-30</span><span style="font:400 20px/1.3 ANC;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">PMD Module Wrap Up</span></button>
+</div>
+<div style="position:absolute;left:40px;top:596px;width:1040px;font:400 15px/1.3 ANC;color:#a8a8a8">*Slides you have not reached yet are locked.</div>
+</sc-if>
+</div>
+</sc-if>
+
+<div style="position:absolute;left:0;top:671px;width:1280px;height:49px;background:#2b2b2b">
+<button onClick="{{ toggleMusic }}" aria-label="Music on / off" title="Music on / off" style="position:absolute;left:62px;top:10px;width:76px;height:28px;border:0;padding:0;background:transparent;color:#FBB929;font:400 20px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px"><sc-if value="{{ musicOn }}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBB929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg></sc-if><sc-if value="{{ musicOff }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBB929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle><path d="M3 3l18 18"></path></svg></sc-if><span>{{ musicLabel }}</span></button>
+<div onClick="{{ voMute }}" title="Narration: mute / unmute" style="position:absolute;left:166px;top:10px;width:30px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<sc-if value="{{ voOn }}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBB929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg></sc-if>
+<sc-if value="{{ voOff }}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBB929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"></path><path d="M16 9l6 6"></path><path d="M22 9l-6 6"></path></svg></sc-if>
+</div>
+<div onPointerDown="{{ onVol }}" aria-label="Volume" title="Volume" style="position:absolute;left:222px;top:15px;width:226px;height:18px;cursor:pointer;touch-action:none"><div style="position:absolute;left:0;right:0;top:7px;height:4px;border-radius:2px;background:#BDBDBD"></div><div style="position:absolute;left:0;top:7px;width:{{ volPct }};height:4px;border-radius:2px;background:#FBB929"></div><div style="position:absolute;top:0;left:{{ volLeft }}px;width:18px;height:18px;border-radius:50%;background:#fff"></div></div>
+<button onClick="{{ goMenu }}" style="position:absolute;left:746px;top:9px;width:92px;height:30px;border:0;padding:0;background:transparent;color:{{ menuC }};box-shadow:{{ menuS }};font:400 20px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="color:#FFD77A"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg><span>Menu</span></button>
+<div style="position:absolute;left:872px;top:11px;width:2px;height:26px;background:#FBB929"></div>
+<button onClick="{{ openGlos }}" style="position:absolute;left:900px;top:9px;width:136px;height:30px;border:0;padding:0;background:transparent;color:{{ glosC }};box-shadow:{{ glosS }};font:400 20px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="color:#FFD77A"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"></path><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"></path></svg><span>Glosarium</span></button>
+<div style="position:absolute;left:1062px;top:11px;width:2px;height:26px;background:#FBB929"></div>
+<button onClick="{{ openHelp }}" style="position:absolute;left:1090px;top:9px;width:132px;height:30px;border:0;padding:0;background:transparent;color:{{ helpC }};box-shadow:{{ helpS }};font:400 20px/1 ANC;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="color:#FFD77A"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg><span>Petunjuk</span></button>
+</div>
+
+<sc-if value="{{ m.kpi }}" hint-placeholder-val="{{ false }}">
+<div data-std="scrim" data-out="{{ m.out }}" onClick="{{ closeModal }}" style="position:absolute;left:0;top:0;width:1280px;height:671px;background:rgba(23,23,23,.68)"></div>
+<div data-std="pop" data-out="{{ m.out }}" style="position:absolute;left:160px;top:126px;width:960px;height:420px;background:#D9D9D9;color:#171717;box-shadow:0 12px 34px rgba(0,0,0,.55);display:flex;flex-direction:column">
+<div style="height:64px;flex:none;background:#FBB929;padding:0 20px 0 32px;display:flex;justify-content:space-between;align-items:center;gap:16px">
+<sc-if value="{{ mk.k1 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">01 · Strategic Imperative</div></sc-if>
+<sc-if value="{{ mk.k2 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">02 · Preparation KPI Alignment</div></sc-if>
+<sc-if value="{{ mk.k3 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">03 · Cascade KPI to Chief Level &amp; L2</div></sc-if>
+<sc-if value="{{ mk.k4 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">04 · Collect Target KPI</div></sc-if>
+<sc-if value="{{ mk.k5 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">05 · Getting each Chief Approval</div></sc-if>
+<sc-if value="{{ mk.k6 }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">06 · Cascade KPI Corporate until Individual</div></sc-if>
+<div data-std="close-x" onClick="{{ closeModal }}" title="Close" style="width:40px;height:40px;flex:none;border:2px solid #171717;color:#171717;font:700 25px/1 ANC;display:flex;align-items:center;justify-content:center;cursor:pointer">×</div>
+</div>
+<div style="flex:1;min-height:0;padding:24px 32px 4px">
+<sc-if value="{{ mk.k1 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Collect Data Final Strategic Imperative</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Collect Target each of KPI on Strategic Imperative</span></div>
+</div></sc-if>
+<sc-if value="{{ mk.k2 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Prepare KPI File</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Recheck KPI list, update formula &amp; definition if needed</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Add new KPI if needed</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.18s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Prepare guiding principal for alignment KPI</span></div>
+</div></sc-if>
+<sc-if value="{{ mk.k3 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Discussion with Each Chief to define their KPI L1 &amp; L2 and getting his/her approval</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Prepare workshop or EC Meeting to finalize the KPI Proposal</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Attending by EC, Selected L2 &amp; Operation if needed</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.18s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Approved KPI L1 &amp; L2</span></div>
+</div></sc-if>
+<sc-if value="{{ mk.k4 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Getting target for all approved KPI L1 &amp; L2</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">For Financial KPI getting data from current budget financial</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">For Non Financial KPI will getting data from each PIC</span></div>
+</div></sc-if>
+<sc-if value="{{ mk.k5 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Create planning schedule meeting with each Chief</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Discuss and getting his/her approval for each KPI Target</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Approved KPI Target</span></div>
+</div></sc-if>
+<sc-if value="{{ mk.k6 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Create cascading KPIs from Corporate KPIs down to individual position level (Collaboration between HR and relevant CEG functions)</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">Communicate KPIs to operations through HR Area Ops, CEG Head, and Operation Leader then cascade KPIs to their teams</span></div>
+<div style="display:flex;gap:14px;align-items:flex-start;font:400 20px/1.35 ANC;color:#2B2B2B;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><span style="width:10px;height:10px;flex:none;background:#FBB929;margin-top:9px;display:block"></span><span style="text-wrap:pretty">All employees KPI will be uploaded by HR HO (PMD)</span></div>
+</div></sc-if>
+</div>
+<div style="height:76px;flex:none;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+<sc-if value="{{ mk.k1 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 01 OF 06 · Close this window, then click step 02</div></sc-if>
+<sc-if value="{{ mk.k2 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 02 OF 06 · Close this window, then click step 03</div></sc-if>
+<sc-if value="{{ mk.k3 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 03 OF 06 · Close this window, then click step 04</div></sc-if>
+<sc-if value="{{ mk.k4 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 04 OF 06 · Close this window, then click step 05</div></sc-if>
+<sc-if value="{{ mk.k5 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 05 OF 06 · Close this window, then click step 06</div></sc-if>
+<sc-if value="{{ mk.k6 }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">STEP 06 OF 06 · All steps viewed — close this window to continue</div></sc-if>
+<div data-std="close" onClick="{{ closeModal }}" style="height:44px;flex:none;padding:0 28px;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:1.5px;display:flex;align-items:center;cursor:pointer">CLOSE</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ m.role }}" hint-placeholder-val="{{ false }}">
+<div data-std="scrim" data-out="{{ m.out }}" onClick="{{ closeModal }}" style="position:absolute;left:0;top:0;width:1280px;height:671px;background:rgba(23,23,23,.68)"></div>
+<div data-std="pop" data-out="{{ m.out }}" style="position:absolute;left:160px;top:90px;width:960px;height:490px;background:#D9D9D9;color:#171717;box-shadow:0 12px 34px rgba(0,0,0,.55);display:flex;flex-direction:column">
+<div style="height:64px;flex:none;background:#FBB929;padding:0 20px 0 32px;display:flex;justify-content:space-between;align-items:center;gap:16px">
+<sc-if value="{{ mr.lead }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">Role of Leader/Superior — PMD Cycle</div></sc-if>
+<sc-if value="{{ mr.emp }}" hint-placeholder-val="{{ false }}"><div style="font:700 25px/1.3 ANC;color:#171717">Role of Employee — PMD Cycle</div></sc-if>
+<div data-std="close-x" onClick="{{ closeModal }}" title="Close" style="width:40px;height:40px;flex:none;border:2px solid #171717;color:#171717;font:700 25px/1 ANC;display:flex;align-items:center;justify-content:center;cursor:pointer">×</div>
+</div>
+<div style="flex:1;min-height:0;padding:22px 32px 4px">
+<sc-if value="{{ mr.lead }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">1</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Ensure all employees have PMD</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">2</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Prepare Job Desc/ KPI &amp; Target/Development plan</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">3</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Cascade the KPIs and ensure are aligned with the organization targets</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.18s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">4</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Discuss and agreed KPI &amp; Development plan with employees</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.24s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">5</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Conduct ongoing two-way communication to review KPI progress, deliver feedback on what works well and what needs improvement, and support employees as needed</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.30s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">6</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Ensure all discussions, coaching, and progress are recorded in the PMD Coaching System (Continuous Performance &amp; Feedback System)</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.36s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">7</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Provide the final PMD assessment objectively</div></div>
+</div>
+</div></sc-if>
+<sc-if value="{{ mr.emp }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.00s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">1</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Prepare PMD plan</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.06s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">2</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Discuss and agree on KPI and development targets with the Leader to ensure achievement during the PMD cycle</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.12s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">3</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Agreed with the Leader to schedule coaching and feedback during the PMD process and record it in the system</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.18s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">4</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Record the activities aimed at achieving performance and development, and request review and feedback from the leader or superior.</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.24s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">5</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Discuss with the leader/superior if support is needed</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.30s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">6</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Ensure all discussions, coaching, and progress are recorded in the PMD Coaching System (Continuous Performance &amp; Feedback System)</div></div>
+<div style="display:flex;gap:14px;align-items:flex-start;animation:stdUp .3s cubic-bezier(.2,.7,.2,1) 0.36s both"><div style="width:36px;height:36px;flex:none;background:#171717;color:#FBB929;font:700 15px/1 ANC;display:flex;align-items:center;justify-content:center">7</div><div style="font:400 20px/1.35 ANC;color:#2B2B2B;text-wrap:pretty">Finalized PMD results and establish development plans for next year</div></div>
+</div>
+</div></sc-if>
+</div>
+<div style="height:76px;flex:none;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+<sc-if value="{{ mr.lead }}" hint-placeholder-val="{{ false }}"><div style="font:400 15px/1.3 ANC;color:#2B2B2B">*Supervisors and employees may request feedback from across org.</div></sc-if>
+<div></div>
+<div data-std="close" onClick="{{ closeModal }}" style="height:44px;flex:none;padding:0 28px;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:1.5px;display:flex;align-items:center;cursor:pointer">CLOSE</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ m.glos }}" hint-placeholder-val="{{ false }}">
+<div data-std="scrim" data-out="{{ m.out }}" onClick="{{ closeModal }}" style="position:absolute;left:0;top:0;width:1280px;height:671px;background:rgba(23,23,23,.68)"></div>
+<div data-std="pop" data-out="{{ m.out }}" style="position:absolute;left:160px;top:146px;width:960px;height:380px;background:#D9D9D9;color:#171717;box-shadow:0 12px 34px rgba(0,0,0,.55);display:flex;flex-direction:column">
+<div style="height:64px;flex:none;background:#FBB929;padding:0 20px 0 32px;display:flex;justify-content:space-between;align-items:center;gap:16px">
+<div style="font:700 25px/1.3 ANC;color:#171717">Glossary</div>
+<div data-std="close-x" onClick="{{ closeModal }}" title="Close" style="width:40px;height:40px;flex:none;border:2px solid #171717;color:#171717;font:700 25px/1 ANC;display:flex;align-items:center;justify-content:center;cursor:pointer">×</div>
+</div>
+<div style="flex:1;min-height:0;padding:20px 32px 4px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;row-gap:10px;align-content:start">
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">PMD</b><span style="color:#2B2B2B">Performance Management and Development</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">KPI</b><span style="color:#2B2B2B">Key Performance Indicator</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">IDP</b><span style="color:#2B2B2B">Individual Development Plan</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">PIP</b><span style="color:#2B2B2B">Performance Improvement Plan</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">OSM</b><span style="color:#2B2B2B">Office of Strategic Management</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">CEG</b><span style="color:#2B2B2B">Central Expertise Group</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">L1</b><span style="color:#2B2B2B">Chief Level</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:8px;font:400 20px/1.35 ANC"><b style="width:70px;flex:none;color:#171717">L2</b><span style="color:#2B2B2B">GM/Div Head Level</span></div>
+</div>
+<div style="height:76px;flex:none;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+<div></div>
+<div data-std="close" onClick="{{ closeModal }}" style="height:44px;flex:none;padding:0 28px;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:1.5px;display:flex;align-items:center;cursor:pointer">CLOSE</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ m.help }}" hint-placeholder-val="{{ false }}">
+<div data-std="scrim" data-out="{{ m.out }}" onClick="{{ closeModal }}" style="position:absolute;left:0;top:0;width:1280px;height:671px;background:rgba(23,23,23,.68)"></div>
+<div data-std="pop" data-out="{{ m.out }}" style="position:absolute;left:160px;top:98px;width:960px;background:#D9D9D9;color:#171717;box-shadow:0 12px 34px rgba(0,0,0,.55);display:flex;flex-direction:column">
+<div style="height:64px;flex:none;background:#FBB929;padding:0 20px 0 32px;display:flex;justify-content:space-between;align-items:center">
+<div style="font:700 25px/1.3 ANC;color:#171717">Guide</div>
+<div data-std="close-x" onClick="{{ closeModal }}" title="Close" style="width:40px;height:40px;border:2px solid #171717;color:#171717;font:700 25px/1 ANC;display:flex;align-items:center;justify-content:center;cursor:pointer">×</div>
+</div>
+<div style="padding:24px 32px 4px;display:flex;flex-direction:column;gap:14px;font:400 20px/1.4 ANC;color:#171717">
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:10px"><strong style="width:30px;flex:none">01</strong><span>Click <strong>›</strong> to continue and <strong>‹</strong> to go back.</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:10px"><strong style="width:30px;flex:none">02</strong><span>On interactive slides, the glowing item shows what to click next. <strong>›</strong> appears once every item has been opened and the narration has finished.</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:10px"><strong style="width:30px;flex:none">03</strong><span>Click <strong>Menu</strong> to open or close the Main Hub and choose a module, or the slides of this module.</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:10px"><strong style="width:30px;flex:none">04</strong><span>Open <strong>Glosarium</strong> to see abbreviations such as KPI, IDP, and PIP.</span></div>
+<div style="display:flex;gap:14px;border-bottom:1px solid #BDBDBD;padding-bottom:10px"><strong style="width:30px;flex:none">05</strong><span><strong>Music / Narration / Volume:</strong> Click <strong>On/Off</strong> to turn the background music on or off, click the speaker to mute or unmute the narration, and click or drag the slider to adjust the volume.</span></div>
+</div>
+<div style="height:76px;flex:none;padding:0 32px;display:flex;align-items:center;justify-content:flex-end">
+<div data-std="close" onClick="{{ closeModal }}" style="height:44px;padding:0 28px;background:#171717;color:#FBB929;font:700 15px/1 ANC;letter-spacing:1.5px;display:flex;align-items:center;cursor:pointer">CLOSE</div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+<sc-if value="{{ showReview }}" hint-placeholder-val="{{ true }}">
+<div style="height:36px;display:flex;align-items:center;gap:14px;font:400 15px ANC;color:#a8a8a8">
+<button onClick="{{ prevAny }}" style="height:30px;padding:0 12px;border:1px solid #5a5a5a;background:#2b2b2b;color:#e2e2e2;font:700 15px ANC;cursor:pointer">‹</button>
+<select key="{{ idx }}" onChange="{{ jump }}" style="height:30px;background:#2b2b2b;color:#e2e2e2;border:1px solid #5a5a5a;font:400 15px ANC;padding:0 8px">
+<sc-for list="{{ slideOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o.v }}" selected="{{ o.sel }}">{{ o.l }}</option></sc-for>
+</select>
+<button onClick="{{ nextAny }}" style="height:30px;padding:0 12px;border:1px solid #5a5a5a;background:#2b2b2b;color:#e2e2e2;font:700 15px ANC;cursor:pointer">›</button>
+<span>{{ pos }}</span>
+<span style="color:{{ lockC }}">{{ lockTxt }}</span>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lockNext&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;lockStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;hidden&quot;,&quot;disabled&quot;],&quot;default&quot;:&quot;hidden&quot;,&quot;tsType&quot;:&quot;'hidden'|'disabled'&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;showReview&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Review&quot;}}">
+const SL=[
+ ['01','Home — Performance Management'],['02','What is PMD'],['03','Role question'],['04','Role of Non-HR Leaders'],
+ ['05','Employee Experience Journey (SL-05–18 combined)'],['19','PMD position in EEJ'],['20','PMD benefits'],
+ ['21','Balanced Scorecard'],['22','KPI Alignment'],['23','PMD Cycle'],['24','Role per PMD Cycle (+SL-25, 26)'],
+ ['27','Performance Improvement Plan'],['28','PIP Route Map'],['29','PMD Wrap Up'],['30','PMD Module Wrap Up']];
+// Revisi 30 Okt 2026 (docs/Revisi_M04_30Okt.md): semua teks slide & layer ditulis LITERAL di template (aturan Editable manual). JS hanya state.
+// SL-19: hanya kunci fungsi + rentang tahap yang dicakup (kolom 1–7) + warna garis (gaya M02 SL-08).
+const R19=[['od',1,7,'#FBB929'],['rm',1,7,'#6CBF4B'],['tm',1,6,'#E4573D'],['pmd',3,6,'#4A8FE7']];
+const BSC4=['fin','cus','int','lg'];
+// SL-23: periode -> indeks langkah siklus (0–6), kolom grid kurung.
+const PH=[['b','1 / span 2',[0,1]],['m','3 / span 1',[2]],['e','4 / span 4',[3,4,5,6]]];
+const REQ={'02':['what','why'],'04':['r1','r2'],'05':['1','2','3','4','5','6','7'],'19':['od','rm','tm','pmd'],'21':['fin','cus','int','lg','vs'],'22':['1','2','3','4','5','6'],'23':['b','m','e'],'24':['lead','emp'],'27':['act'],'28':['t1','t2']};
+// Slide bertahap (C7/C11/C13): tahap berikut baru bisa diklik setelah klip tahap sebelumnya selesai; selama klip tahap berbunyi tidak ada item lain yang bisa dibuka.
+// SL-02/04: klip per tombol (vo-sl02-s1/s2, vo-sl04-s1/s2). SL-05: dropdown 7 tahap (vo-sl05-s1..s7). SL-19: 4 fungsi tanpa klip, lalu klip penutup vo-sl19-j. SL-27: SEE ACTIONS lalu vo-sl27-j.
+const STEP={'02':2,'04':2,'05':7,'19':4,'27':1};
+const STEPK={'02':['what','why'],'04':['r1','r2'],'19':['od','rm','tm','pmd'],'27':['act']};
+const skey=(c,k)=>STEPK[c]?STEPK[c][k-1]:String(k);
+// Panel yang bertukar isi: isi lama keluar (data-out, 0,22 dtk) sebelum isi baru masuk (juga placeholder -> isi pertama).
+const SWAP={'02':1,'04':1,'21':1,'27':1,'28':1};
+const Y='#FBB929',K='#171717',PULSE='pl 1.6s ease-in-out infinite';
+const two=n=>String(n).padStart(2,'0');
+const COLW=(1200-6*4)/7;
+const colL=i=>40+i*(COLW+4);
+
+const HUBM=[['01','OD'],['02','RM'],['03','RO'],['04','PMD'],['05','TM'],['06','LD'],['07','IR'],['08','EM']];
+const HUBREADY={'01':1,'02':1,'03':1,'04':1,'05':1,'06':1};
+const HUBME='04';
+// ── Footer bersama M01–M08 (31 Okt 2026; docs/STANDAR_Tampilan.md §7) — blok ini SAMA di semua modul & Mockup Interaktif ──
+// Musik On/Off = musik latar bersama (audio/musik/musik_latar_v1.0.mp3, loop, pelan = volume × 0,35); speaker = mute/unmute VO;
+// slider = volume VO + musik (klik atau seret); Menu = buka/tutup Main Hub (tutup = masuk ulang slide aktif, state reset);
+// Glosarium/Petunjuk = buka/tutup popup B1 dengan animasi keluar. Musik/volume/mute disimpan per sesi (hr8.music, hr8.vol, hr8.voMuted)
+// sehingga tetap saat pindah slide & modul. Mute/volume 0 hanya membisukan audio — jam cue/kunci VO tetap berjalan (REVISI_GLOBAL C13).
+// Embed/pratinjau storyboard senyap; musik berhenti selama video slide diputar (M08).
+const HRF=window.HRF||(window.HRF=(()=>{
+  const SRC='audio/musik/musik_latar_v1.0.mp3',GAIN=0.35,EV=['pointerdown','keydown'];
+  const get=k=>{try{return sessionStorage.getItem(k);}catch(e){return null;}},put=(k,v)=>{try{sessionStorage.setItem(k,v);}catch(e){}};
+  const H={a:null,want:false,busy:false,retry:null,vk:'',
+    music:()=>get('hr8.music')!=='0',
+    vol:()=>{const v=parseFloat(get('hr8.vol'));return isNaN(v)?0.6:Math.min(1,Math.max(0,v));},
+    muted:()=>get('hr8.voMuted')==='1',
+    el(){if(!H.a){const a=new Audio();a.loop=true;a.preload='auto';a.src=SRC;a.dataset.bgm='1';H.a=a;window.__hrBGM=a;}return H.a;},
+    sync(on,vol,silent){H.want=!!on&&!silent;const a=H.a||(H.want?H.el():null);if(!a)return;
+      a.volume=Math.min(1,Math.max(0,vol))*GAIN;
+      if(!H.want){if(!a.paused)a.pause();return;}
+      if(a.paused&&!H.busy){H.busy=true;let p;try{p=a.play();}catch(e){p=null;}
+        if(p&&p.then)p.then(()=>{H.busy=false;},()=>{H.busy=false;H.arm();});else H.busy=false;}},
+    arm(){if(H.retry)return;H.retry=()=>{EV.forEach(t=>document.removeEventListener(t,H.retry,true));H.retry=null;
+        setTimeout(()=>{if(H.want&&H.a&&H.a.paused)H.a.play().catch(()=>H.arm());},0);};
+      EV.forEach(t=>document.addEventListener(t,H.retry,true));},
+    drag(e,set){const el=e&&e.currentTarget;if(!el)return;
+      const f=x=>{const r=el.getBoundingClientRect();if(r.width>0)set(Math.round(Math.min(1,Math.max(0,(x-r.left)/r.width))*100)/100);};
+      f(e.clientX);if(e.preventDefault)e.preventDefault();
+      const mv=ev=>f(ev.clientX),up=()=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);};
+      window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);},
+    mix(C){const p=C.prototype,dm=p.componentDidMount,du=p.componentDidUpdate,rv=p.renderVals;
+      p.componentDidMount=function(...a){this.setState({music:H.music(),vol:H.vol(),voMuted:H.muted()});if(dm)dm.apply(this,a);this.bgmSync();};
+      p.componentDidUpdate=function(...a){if(du)du.apply(this,a);this.bgmSync();};
+      p.bgmSync=function(){const S=this.state,vol=S.vol==null?0.6:S.vol;
+        const silent=!!S.embed||this.embed===true||/[?&]embed(=|&|$)/.test(location.search)||/(^|[#&])embed(&|$)/.test(location.hash)||S.vid==='playing';
+        H.sync(S.music!==false,vol,silent);
+        if(!this.voSync){const k=vol+'|'+!!S.voMuted;document.querySelectorAll('video').forEach(v=>{if(v.dataset.hrf!==k){v.dataset.hrf=k;v.volume=vol;v.muted=!!S.voMuted;}});}};
+      if(!p.modalOpen)p.modalOpen=function(t){clearTimeout(this.tLayer);this.tLayer=null;this.setState({modal:typeof t==='string'?{t}:t,modalOut:false});};
+      if(!p.modalClose)p.modalClose=function(){if(!this.state.modal||this.tLayer)return;this.setState({modalOut:true});this.tLayer=setTimeout(()=>{this.tLayer=null;this.setState({modal:null,modalOut:false});},220);};
+      p.renderVals=function(){const o=rv.call(this),S=this.state,vol=S.vol==null?0.6:S.vol,on=S.music!==false,L=!!this.layerOpen;
+        o.musicLabel=on?'On':'Off';o.musicOn=on;o.musicOff=!on;
+        o.toggleMusic=()=>{const m=!(this.state.music!==false);put('hr8.music',m?'1':'0');this.setState({music:m});};
+        o.voOn=!S.voMuted;o.voOff=!!S.voMuted;
+        o.voMute=()=>{const m=!this.state.voMuted;put('hr8.voMuted',m?'1':'0');this.setState({voMuted:m});};
+        o.volLeft=Math.round(vol*208);o.volPct=Math.round(vol*100)+'%';
+        o.onVol=e=>H.drag(e,v=>{put('hr8.vol',String(v));if(v!==this.state.vol)this.setState({vol:v});});
+        // Popup footer: klik tombol yang sama = tutup (animasi), tombol lain = ganti isi.
+        const wrap=(name,t)=>{const f=o[name];if(!f)return;o[name]=()=>{const s=this.state;
+          if(L){if(s.layer===t&&!s.layerOut)this.layerClose();else this.layerOpen(t);return;}
+          if(s.modal&&s.modal.t===t&&!s.modalOut){this.modalClose();return;}
+          clearTimeout(this.tLayer);this.tLayer=null;if(s.modalOut)this.setState({modalOut:false});f();};};
+        if(L){wrap('openGlossary','glossary');wrap('openHelp','help');}else{wrap('openGlos','glos');wrap('openHelp','help');}
+        if(!L&&o.closeModal)o.closeModal=()=>this.modalClose();
+        if(o.m&&!L)o.m={...o.m,out:S.modalOut?'1':'0'};
+        // Menu: Main Hub terbuka → tutup (masuk ulang slide aktif = reset); tertutup → buka Main Hub, popup yang terbuka keluar dengan animasi.
+        o.goMenu=()=>{const s=this.state;if(s.hub){this.go(s.idx!=null?s.idx:s.i);return;}
+          this.setState({hub:'hub'});if(L&&s.layer)this.layerClose();if(!L&&s.modal)this.modalClose();};
+        return o;};
+    }
+  };
+  return H;
+})());
+class Component extends DCLogic {
+  state={hub:null,far:0,hmods:null,hdone:null,idx:0,v:{},act:{},hs:{},he:{},out:null,modal:null,modalOut:false,music:true,vol:0.6,scale:1,embed:false,voMuted:false,cue:0,vlock:false,cueFree:false,scs:null,sc:0};
+  componentDidMount(){setTimeout(()=>{if(!this.props.embedded&&!/SL-|embed/.test(location.hash)&&!/[?&](s|embed)(=|&|$)/.test(location.search))this.setState({hub:'hub'});},0);this.hubInit();
+    this.fit=()=>{const bar=this.state.embed||this.props.showReview===false?0:46;const W=(this.wrapEl&&this.wrapEl.clientWidth)||window.innerWidth,H=(this.wrapEl&&this.wrapEl.clientHeight)||window.innerHeight;this.setState({scale:Math.min(W/1280,(H-bar)/720)});};
+    if(window.ResizeObserver){this.ro=new ResizeObserver(()=>this.fit());if(this.wrapEl)this.ro.observe(this.wrapEl);}
+    window.addEventListener('resize',this.fit);
+    this.readHash();this.fit();
+    window.addEventListener('hashchange',this.onHash=()=>this.readHash());
+    this.voInit();
+  }
+  componentDidUpdate(){this.voSync();}
+  componentWillUnmount(){window.removeEventListener('resize',this.fit);window.removeEventListener('hashchange',this.onHash);clearTimeout(this.tOut);clearTimeout(this.tLayer);this.voKill();}
+  readHash(){
+    const h=location.hash.slice(1).split('&');const code=(h[0]||'').replace('SL-','');
+    const i=SL.findIndex(s=>s[0]===code);const embed=h.includes('embed');
+    const v={...this.state.v},act={...this.state.act},hs={...this.state.hs},he={...this.state.he};let modal=null;
+    if(i>=0&&h.includes('all')&&REQ[code])REQ[code].forEach(k=>v[code+'_'+k]=true);
+    if(i>=0&&h.includes('all')&&STEP[code]){hs[code]=STEP[code];he[code]=true;}
+    const a=h.find(x=>x.startsWith('act='));if(a&&i>=0){act[code]=a.slice(4);v[code+'_'+a.slice(4)]=true;}
+    const md=h.find(x=>x.startsWith('modal='));if(md){const x=md.slice(6);modal=/^\d$/.test(x)?{t:'kpi',n:+x-1}:{t:x==='glos'||x==='help'?x:'role',k:x};}
+    if(i>=0)this.go(i,{v,act,hs,he,modal,embed,cueFree:h.includes('all')||!!a},true);else this.setState({embed},this.fit);
+  }
+  go(i,extra={},noHash){
+    const code=SL[i][0];this.voSeq++;
+    clearTimeout(this.tOut);this.tOut=null;this.outFn=null;clearTimeout(this.tLayer);this.tLayer=null;this.voCb=null;clearTimeout(this.tVo);this.tVo=null;this.scStop();
+    let v={...(extra.v||this.state.v)},act={...(extra.act||this.state.act)},hs={...(extra.hs||this.state.hs)},he={...(extra.he||this.state.he)};
+    if(!noHash){Object.keys(v).forEach(x=>{if(x.startsWith(code+'_'))delete v[x];});delete act[code];delete hs[code];delete he[code];}
+    if(code==='28'&&!act['28']){act['28']='t1';v['28_t1']=true;}
+    this.setState({idx:i,modal:null,modalOut:false,out:null,hub:null,far:Math.max(this.state.far||0,i),cue:0,vlock:!!this.CUE[i],cueFree:false,scs:null,sc:0,...extra,v,act,hs,he},()=>this.fit&&this.fit());
+    if(!noHash&&!this.state.embed&&!this.props.embedded)history.replaceState(null,'','#SL-'+code);
+    if(!noHash&&i===SL.length-1)this.markDone();
+  }
+  seen(c,k){return !!this.state.v[c+'_'+k];}
+  // Next (C6, docs/WORKFLOW_VO.md §4.4): semua item wajib dibuka (slide bertahap: klip semua tahap + klip penutup selesai) DAN VO slide selesai.
+  done(c){if(this.props.lockNext===false)return true;const r=REQ[c];if(r&&!r.every(k=>this.seen(c,k)))return false;const n=STEP[c];return !n||((this.state.hs[c]||0)>=n&&!!this.state.he[c]);}
+  voFin(S){return this.cueFree()||!S.vlock;}
+  nextOn(S){return true;}
+  nx(c){const r=REQ[c];return r?r.find(k=>!this.seen(c,k)):null;}
+  // C13: item tidak bisa dibuka selama VO slide, selama klip tahap/penutup berbunyi (juga lewat keyboard / klik cepat), selain mode bebas cue.
+  busy(){return !!this.voCb;}
+  locked(){return (!this.cueFree()&&!!this.state.vlock)||this.busy();}
+  visit(c,k,extra){if(this.locked())return;this.apply(c,k,extra);}
+  apply(c,k,extra){
+    const cur=this.state.act[c],ap=s=>({v:{...s.v,[c+'_'+k]:true},act:{...s.act,[c]:k},...(extra?extra(s):{})});
+    if(SWAP[c]&&cur!==k){this.setState(s=>({v:{...s.v,[c+'_'+k]:true}}));this.later('s'+c,ap);}
+    else{this.outFlush();this.setState(ap);}
+  }
+  // ── Animasi keluar standar (docs/STANDAR_Tampilan.md): elemen diberi data-out="1" 0,22 dtk sebelum dilepas ──
+  outFlush(){if(this.tOut){clearTimeout(this.tOut);this.tOut=null;const f=this.outFn;this.outFn=null;if(f)f();}}
+  later(tag,patch){this.outFlush();const run=()=>this.setState(s=>({out:null,...patch(s)}));this.outFn=run;this.setState({out:tag});this.tOut=setTimeout(()=>{this.tOut=null;this.outFn=null;run();},220);}
+  modalOpen(m){clearTimeout(this.tLayer);this.tLayer=null;this.setState({modal:m,modalOut:false});}
+  modalClose(){if(!this.state.modal||this.tLayer)return;this.setState({modalOut:true});this.tLayer=setTimeout(()=>{this.tLayer=null;this.setState({modal:null,modalOut:false});},220);}
+  // ── Slide bertahap (C7, C11): klik tahap k → buka penjelasannya + putar klip tahap VOS[indeks][k-1].
+  // Tahap berikut terbuka setelah klip selesai (ended/error; autoplay diblokir → timer cadangan VOS_DUR, C13). Embed → langsung selesai.
+  // Setelah tahap terakhir: klip penutup VOS_END (bila ada) → he[code]; Next menunggu ini (done()). ──
+  opened(c){let n=0;while(n<STEP[c]&&this.seen(c,skey(c,n+1)))n++;return n;}
+  stepClick(c,k){
+    const S=this.state,n=this.opened(c),h=S.hs[c]||0;
+    if(this.locked()||(!this.cueFree()&&(k>n+1||(k===n+1&&h<n))))return;
+    const i=S.idx,N=STEP[c],nn=Math.max(n,k);
+    const fin=()=>{if(this.state.idx!==i)return;const m=Math.max(nn,this.opened(c));const last=m===N&&!this.state.he[c];
+      this.setState(s=>({hs:{...s.hs,[c]:Math.max(s.hs[c]||0,m)}}));if(last)this.stepEnd(c,i);};
+    const src=!this.voSilent()&&this.VOS_ADA[i]?this.VOS[i][k-1]:null;
+    if(src)this.voCb={src,cb:fin,dur:(this.VOS_DUR[i]||[])[k-1]||6};
+    const sp=src&&this.SCUE[src]?()=>({scs:src,sc:0}):null;
+    this.apply(c,skey(c,k),sp);
+    if(src){if(sp)this.scStart(src);this.voPlay(src);}else fin();
+  }
+  stepEnd(c,i){const src=this.VOS_END[i],ok=()=>{if(this.state.idx===i)this.setState(s=>({he:{...s.he,[c]:true}}));};
+    if(!src||this.voSilent()||!this.VOS_END_ADA[i]){ok();return;}
+    this.voCb={src,cb:ok,dur:this.VOS_END_DUR[i]||6};if(this.SCUE[src]){this.setState({scs:src,sc:0});this.scStart(src);}this.voPlay(src);}
+  voDone(src){const w=this.voCb;if(!w||w.src!==src)return;this.voCb=null;clearTimeout(this.tVo);this.tVo=null;w.cb();this.setState({});}
+  // C13: autoplay diblokir / audio gagal TIDAK menyelesaikan klip tahap seketika — timer cadangan sepanjang durasi klip (VOS_DUR), lalu tahap berikut terbuka.
+  voFail(src){const w=this.voCb;if(!w||w.src!==src||this.tVo)return;this.tVo=setTimeout(()=>{this.tVo=null;this.voDone(src);},(w.dur||6)*1000);}
+  // ── Sub-cue klip tahap/penutup: kalimat ke-n klip SCUE[src] memunculkan butir ke-n (SL-02 WHY 01/02, SL-27 aksi 1/2). Jam = audio.currentTime; mute/diblokir = jam dinding. ──
+  SCUE={'audio/vo/M04/vo-sl02-s2_v1.0.mp3':[0.35,10.53],'audio/vo/M04/vo-sl27-j_v1.0.mp3':[0.34,3.40,9.55]};
+  scStart(src){this.scStop();this.scSrc=src;this.scT0=this.scEnter=performance.now();this.scMax=0;this.scTimer=setInterval(()=>this.scTick(),40);}
+  scTick(){const c=this.SCUE[this.scSrc];if(!c){this.scStop();return;}
+    const a=this.vo,now=performance.now();
+    if(a&&!a.paused&&!a.ended&&a.getAttribute('src')===this.scSrc&&a.currentTime>0)this.scT0=now-a.currentTime*1000;
+    else if(now-this.scEnter<1500&&!this.tVo)this.scT0=now;
+    const t=Math.max(this.scMax,(now-this.scT0)/1000);this.scMax=t;
+    const n=c.filter(x=>t>=x).length;if(n!==this.state.sc)this.setState({sc:n});if(n>=c.length)this.scStop();}
+  scStop(){if(this.scTimer){clearInterval(this.scTimer);this.scTimer=null;}}
+  scn(src){return this.cueFree()||this.state.scs!==src?99:this.state.sc;}
+  // ── Pemutar VO (pola bersama M01–M08, docs/WORKFLOW_VO.md §4; playlist judul → penjelasan §4.4, acuan M02 revisi 30 Okt) ──
+  // VO[indeks slide 0-based] = klip penjelasan "Timeline starts". Path ditulis literal agar tools/artifact/deps.py menangkapnya.
+  VO={
+    0:'audio/vo/M04/vo-sl01-a_v1.0.mp3',1:'audio/vo/M04/vo-sl02-a_v1.0.mp3',2:'audio/vo/M04/vo-sl03-a_v1.0.mp3',3:'audio/vo/M04/vo-sl04-a_v1.0.mp3',
+    4:'audio/vo/M04/vo-sl05-a_v1.0.mp3',5:'audio/vo/M04/vo-sl19-a_v1.0.mp3',6:'audio/vo/M04/vo-sl20-a_v1.1.mp3',7:'audio/vo/M04/vo-sl21-a_v1.0.mp3',
+    8:'audio/vo/M04/vo-sl22-a_v1.0.mp3',9:'audio/vo/M04/vo-sl23-a_v1.0.mp3',10:'audio/vo/M04/vo-sl24-a_v1.1.mp3',11:'audio/vo/M04/vo-sl27-a_v1.0.mp3',
+    12:'audio/vo/M04/vo-sl28-a_v1.0.mp3',13:'audio/vo/M04/vo-sl29-a_v1.1.mp3',14:'audio/vo/M04/vo-sl30-a_v1.1.mp3'
+  };
+  // VOT[indeks slide] = [klip judul vo-slXX-t (C2), durasi dtk (tmp/vo/M04c/log.csv)]. SL-01 tanpa judul (sapaan). Cue penjelasan digeser sebesar durasi judul (cueOff).
+  VOT={
+    1:['audio/vo/M04/vo-sl02-t_v1.0.mp3',4.03], 2:['audio/vo/M04/vo-sl03-t_v1.0.mp3',3.32], 3:['audio/vo/M04/vo-sl04-t_v1.0.mp3',3.32], 4:['audio/vo/M04/vo-sl05-t_v1.0.mp3',3.24], 5:['audio/vo/M04/vo-sl19-t_v1.0.mp3',3.24],
+    6:['audio/vo/M04/vo-sl20-t_v1.0.mp3',3.24], 7:['audio/vo/M04/vo-sl21-t_v1.0.mp3',3.48], 8:['audio/vo/M04/vo-sl22-t_v1.0.mp3',3.64], 9:['audio/vo/M04/vo-sl23-t_v1.0.mp3',2.85], 10:['audio/vo/M04/vo-sl24-t_v1.0.mp3',7.75],
+    11:['audio/vo/M04/vo-sl27-t_v1.0.mp3',2.32], 12:['audio/vo/M04/vo-sl28-t_v1.0.mp3',2.32], 13:['audio/vo/M04/vo-sl29-t_v1.0.mp3',1.93], 14:['audio/vo/M04/vo-sl30-t_v1.0.mp3',2.43]
+  };
+  // Klip umum: diputar sekali per kunjungan saat Next slide interaktif berubah terkunci → terbuka (setelah VO slide + semua item + klip tahap/penutup).
+  VO_NEXT='audio/vo/M04/vo-umum-next_v1.0.mp3';
+  // Klip per tahap (C3/C7/C11) — M04c terpasang 30 Okt 2026. VOS_ADA[indeks]=false -> tahap langsung dianggap selesai (tanpa 404).
+  VOS={
+    1:['audio/vo/M04/vo-sl02-s1_v1.0.mp3','audio/vo/M04/vo-sl02-s2_v1.0.mp3'],
+    3:['audio/vo/M04/vo-sl04-s1_v1.0.mp3','audio/vo/M04/vo-sl04-s2_v1.0.mp3'],
+    4:['audio/vo/M04/vo-sl05-s1_v1.0.mp3','audio/vo/M04/vo-sl05-s2_v1.0.mp3','audio/vo/M04/vo-sl05-s3_v1.0.mp3','audio/vo/M04/vo-sl05-s4_v1.0.mp3','audio/vo/M04/vo-sl05-s5_v1.0.mp3','audio/vo/M04/vo-sl05-s6_v1.0.mp3','audio/vo/M04/vo-sl05-s7_v1.0.mp3']
+  };
+  VOS_ADA={1:true,3:true,4:true};
+  // Durasi klip tahap (dtk, tmp/vo/M04c/log.csv) — timer cadangan C13 bila audio diblokir/gagal.
+  VOS_DUR={1:[11.24,18.25],3:[18.83,8.52],4:[4.36,4.12,5.04,4.69,6.54,6.52,5.06]};
+  // Klip penutup setelah tahap terakhir (SL-19: kesimpulan CONCLUSION; SL-27: dua aksi Leader); Next menunggu klip ini.
+  VOS_END={5:'audio/vo/M04/vo-sl19-j_v1.0.mp3',11:'audio/vo/M04/vo-sl27-j_v1.0.mp3'};
+  VOS_END_ADA={5:true,11:true};
+  VOS_END_DUR={5:8.03,11:14.70};
+  voSeq=0;
+  plist(i){const t=this.VOT[i],r=[];if(t)r.push({src:t[0],off:0});if(this.VO[i])r.push({src:this.VO[i],off:t?t[1]:0});return r;}
+  cueOff(i){const t=this.VOT[i];return t?t[1]:0;}
+  voSilent(){return !!this.state.embed||/[?&]embed(=|&|$)/.test(location.search)||/(^|[#&])embed(&|$)/.test(location.hash);}
+  voInit(){try{this.setState({voMuted:sessionStorage.getItem('hr8.voMuted')==='1'});}catch(e){}setTimeout(()=>{this.voReady=true;this.voSync();},0);}
+  voEl(){if(!this.vo){this.vo=new Audio();this.vo.preload='auto';this.vo.dataset.vo='M04';window.__hrVO=this.vo;
+    const fin=()=>{const s=this.vo.getAttribute('src');this.voDone(s);this.voAdv(s);};this.vo.addEventListener('ended',fin);
+    this.vo.addEventListener('error',()=>{const s=this.vo.getAttribute('src');this.voFail(s);this.voAdv(s);});}return this.vo;}
+  // Lanjut ke klip berikutnya di playlist slide (judul → penjelasan) bila klip yang selesai adalah klip playlist yang sedang aktif.
+  voAdv(src){const pl=this.voPl,k=this.voPk;if(!this.voKey||!pl||!pl[k]||pl[k].src!==src||k>=pl.length-1)return;this.voPk=k+1;this.voPlay(pl[k+1].src,true);}
+  voSync(){
+    if(!this.voReady)return;
+    const S=this.state,a=this.vo;
+    if(a){a.muted=!!S.voMuted;a.volume=Math.min(1,Math.max(0,S.vol));}
+    const pl=!this.voSilent()&&!S.hub?this.plist(S.idx):[],key=pl.length?S.idx+':'+this.voSeq:null;
+    if(key!==this.voKey){this.voKey=key;this.voStop();this.voPl=pl;this.voPk=0;this.cueStart();if(pl.length)this.voPlay(pl[0].src,true);}
+    this.voNext(S);
+  }
+  voNext(S){const c=SL[S.idx][0];if(!this.voKey||!REQ[c]||S.idx===SL.length-1||this.props.lockNext===false)return;
+    if(!this.nextOn(S)){this.voLockKey=this.voKey;return;}
+    if(this.voLockKey!==this.voKey)return;this.voLockKey=null;this.voPlay(this.VO_NEXT);}
+  // fromPl = klip playlist slide; klip lain (tahap, penutup, vo-umum-next) memutus playlist.
+  voPlay(src,fromPl){
+    if(!fromPl)this.voPl=null;
+    const a=this.voEl(),S=this.state;
+    a.muted=!!S.voMuted;a.volume=Math.min(1,Math.max(0,S.vol));
+    if(a.getAttribute('src')!==src)a.src=src;
+    try{a.currentTime=0;}catch(e){}
+    const p=a.play();if(p&&p.catch)p.catch(()=>{this.cuePend=false;this.voArm();this.voFail(src);});
+  }
+  voStop(){const a=this.vo;if(!a)return;a.pause();try{a.currentTime=0;}catch(e){}}
+  voArm(){
+    if(this.voRetry)return;
+    this.voRetry=()=>{document.removeEventListener('pointerdown',this.voRetry,true);this.voRetry=null;
+      setTimeout(()=>{const a=this.vo;if(this.voKey&&a&&a.paused)a.play().catch(()=>{});},0);};
+    document.addEventListener('pointerdown',this.voRetry,true);
+  }
+  voKill(){this.voReady=false;this.voKey=null;this.voCb=null;clearTimeout(this.tVo);this.tVo=null;this.voStop();this.cueStop();this.scStop();if(this.voRetry){document.removeEventListener('pointerdown',this.voRetry,true);this.voRetry=null;}}
+  // ── Cue VO: isi muncul mengikuti kalimat VO, item terkunci sampai VO selesai (docs/WORKFLOW_VO.md §0.5, §4.2) ──
+  // CUE[indeks slide] = [durasi klip penjelasan dtk (log.csv M04/M04c), [awal kalimat 1, awal kalimat 2, ...]] dari tools/vo_cue.py (tmp/vo/M04/cue.json; SL-20/24/29/30 = v1.1 M04c).
+  // Diukur pada klip penjelasan; digeser otomatis sebesar durasi klip judul VOT (cueOff).
+  // Template: <sc-if value="{{ cu.cN }}"> tampil saat kalimat N mulai; data-item="1" redup & tak bisa diklik selama data-vlock="1" (sampai judul + durasi + CUE_PAD).
+  CUE={
+    0:[5.56,[0.34,3.73]],1:[7.88,[0.30,5.60]],2:[5.24,[0.30]],3:[7.16,[0.33,3.99]],4:[8.60,[0.35,4.99]],
+    5:[7.72,[0.34,3.75]],6:[27.26,[0.35,4.10,12.63,20.90]],7:[10.84,[0.34,5.57]],8:[10.19,[0.35,6.57]],9:[6.42,[0.35,4.08]],
+    10:[5.09,[0.35]],11:[7.48,[0.34,4.31]],12:[8.27,[0.30,5.90]],13:[34.79,[0.35,6.55,9.76,13.86,18.88,22.14,24.11,29.38,31.81]],14:[26.92,[0.34,4.50,10.64,19.04,24.74]]
+  };
+  CUE_PAD=0.2;
+  // Bebas cue (semua langsung tampil, tanpa kunci): embed (pratinjau storyboard), mode review all / act=, slide tanpa CUE.
+  cueFree(){return this.voSilent()||!!this.state.cueFree||!this.CUE[this.state.idx];}
+  // Jam slide: mulai saat playlist slide diputar (kunci voKey baru). Audio memutar -> offset klip + audio.currentTime; mute/diblokir/antar-klip -> performance.now.
+  // vlock (kunci item + Next) = jam < offset judul + durasi klip penjelasan + CUE_PAD.
+  cueStart(){this.cueStop();const i=this.state.idx;if(!this.voKey||!this.CUE[i])return;this.cueC=this.CUE[i];this.cueO=this.cueOff(i);this.cueEnter=this.cueT0=performance.now();this.cueMax=0;this.cuePend=true;this.cueTimer=setInterval(()=>this.cueTick(),40);this.cueTick();}
+  cueTick(){
+    const c=this.cueC;if(!c||!this.voKey){this.cueStop();return;}
+    const a=this.vo,now=performance.now(),pe=this.voPl&&this.voPl[this.voPk];
+    if(a&&pe&&!a.paused&&!a.ended&&a.getAttribute('src')===pe.src&&a.currentTime>0){this.cuePend=false;this.cueT0=now-(pe.off+a.currentTime)*1000;}
+    else if(this.cuePend&&now-this.cueEnter<1500)this.cueT0=now;
+    const t=Math.max(this.cueMax,(now-this.cueT0)/1000);this.cueMax=t;
+    const off=this.cueO,n=c[1].filter(x=>t>=off+x).length,lk=t<off+c[0]+this.CUE_PAD;
+    if(n!==this.state.cue||lk!==this.state.vlock)this.setState({cue:n,vlock:lk});
+    if(!lk&&n>=c[1].length)this.cueStop();
+  }
+  cueStop(){if(this.cueTimer){clearInterval(this.cueTimer);this.cueTimer=null;}}
+  voToggle(){this.setState(s=>{const m=!s.voMuted;try{sessionStorage.setItem('hr8.voMuted',m?'1':'0');}catch(e){}return {voMuted:m};});}
+  st(c,k){return this.state.act[c]===k?'active':this.seen(c,k)?'visited':'normal';}
+  pulse(c,k){return this.nx(c)===k&&!(this.state.vlock&&!this.cueFree())?PULSE:'none';}
+  hubInit(){try{this.setState({hdone:JSON.parse(localStorage.getItem('hr8.done')||'[]')});}catch(e){}if(!this.props.hubMods)fetch('hr-modules.json').then(r=>r.json()).then(j=>this.setState({hmods:j.modules||[]})).catch(()=>{});}
+  getMods(){return this.props.hubMods||this.state.hmods||HUBM.map(h=>({id:h[0],code:h[1],ready:!!HUBREADY[h[0]],files:{mockup:'M'+h[0]+' '+h[1]+' Mockup.dc.html'}}));}
+  getDone(){return this.props.hubDone||this.state.hdone||[];}
+  markDone(){if(this.props.onModuleDone){this.props.onModuleDone(HUBME);return;}const d=this.getDone();if(d.includes(HUBME))return;const n=[...d,HUBME];try{localStorage.setItem('hr8.done',JSON.stringify(n));}catch(e){}this.setState({hdone:n});}
+  pickModule(m){if(m.id===HUBME){this.go(0);return;}if(this.props.onPickModule){this.props.onPickModule(m.id);return;}const f=m.files&&m.files.mockup;if(f)location.href=encodeURI(f)+'#SL-01';}
+  hubVals(idx,codes,goFn){
+    const Y='#FBB929',K='#171717',hs=this.state.hub,far=Math.max(this.state.far||0,idx);
+    const mods=this.getMods(),dn=this.getDone(),seq=this.props.sequential??true;
+    const hub={on:!!hs,tabHub:hs==='hub',tabSlides:hs==='slides',th:hs==='hub'?{bg:K,fg:Y}:{bg:'transparent',fg:K},ts:hs==='slides'?{bg:K,fg:Y}:{bg:'transparent',fg:K}};
+    HUBM.forEach((h,i)=>{
+      const m=mods.find(x=>x.id===h[0])||{id:h[0],ready:false};const mi=mods.indexOf(m);
+      let lk=seq&&mods.slice(0,mi<0?i:mi).some(x=>x.ready&&!dn.includes(x.id));if(h[0]===HUBME)lk=false;
+      const st=!m.ready?'soon':lk?'locked':dn.includes(h[0])?'done':'open';
+      hub['c'+h[0]]={done:st==='done',open:st==='open',locked:st==='locked',soon:st==='soon',
+        bg:st==='open'?Y:st==='soon'?'#2b2b2b':'#3c3c3c',bd:st==='open'||st==='done'?Y:st==='soon'?'#6f6f6f':'#3c3c3c',bs:st==='soon'?'dashed':'solid',
+        fg:st==='open'?K:st==='soon'?'#a8a8a8':'#fff',ey:st==='open'?'#7a5400':st==='done'?Y:'#a8a8a8',op:st==='locked'?0.4:1,pe:st==='open'||st==='done'?'auto':'none',
+        tip:st==='locked'?'Complete the previous module first.':st==='soon'?'This module is not available yet.':'',go:()=>this.pickModule(m)};
+    });
+    const ms={};const free=this.props.lockNext===false;
+    codes.forEach((c,i)=>{const cur=i===idx,ok=free||i<=far;ms['s'+c]={bg:cur?Y:'#3c3c3c',fg:cur?K:'#fff',cc:cur?'#7a5400':Y,bd:cur?Y:'#3c3c3c',op:ok?1:0.4,pe:ok?'auto':'none',go:()=>goFn(i)};});
+    return {hub,ms,goMenu:()=>this.setState({hub:'hub',modal:null,layer:null}),hubTabHub:()=>this.setState({hub:'hub'}),hubTabSlides:()=>this.setState({hub:'slides'}),menuC:hs?'#fff':Y,menuS:hs?'inset 0 -2px 0 '+Y:'none'};
+  }
+  renderVals(){
+    if(!this.wrapRef)this.wrapRef=el=>{if(el&&el!==this.wrapEl){this.wrapEl=el;if(this.ro)this.ro.observe(el);if(this.fit)this.fit();}};
+    const {idx,act,modal}=this.state;const code=SL[idx][0];
+    const is={};SL.forEach((s,i)=>is['s'+s[0]]=i===idx);
+    const o1=t=>this.state.out===t?'1':'0',vl=!this.cueFree()&&this.state.vlock,bz=this.busy();
+    // Tahap bertahap: open = penjelasan tampil (tetap terlihat); hint/anim = tahap berikut yang boleh diklik (setelah klip tahap sebelumnya + VO slide); bz = klip tahap sedang berbunyi.
+    const fr=this.cueFree(),stp=(c,N)=>{const n=this.opened(c),h=this.state.hs[c]||0,o={};for(let k=1;k<=N;k++){const key=skey(c,k),sn=this.seen(c,key),ac=act[c]===key,lk=!fr&&(k>n+1||(k===n+1&&h<n)),nx=k===n+1&&h>=n&&!vl&&!bz;
+      o[k]={key,open:sn,closed:!sn,hint:nx,lk,ac,sn,op:lk?0.35:1,io:sn||nx?1:0.55,pe:lk||bz?'none':'auto',anim:nx?PULSE:'none',bg:ac?Y:sn?'#4a4a4a':'#333',fg:ac?K:sn?'#fff':Y,go:()=>this.stepClick(c,k)};}return o;};
+    // Tombol bertahap SL-02/04 (warna tombol standar: aktif hitam, dikunjungi abu, normal kuning).
+    const sbtn=(c,N)=>{const t=stp(c,N),o={};for(let k=1;k<=N;k++){const x=t[k];o[x.key]={...x,bg:x.ac?K:x.sn?'#3c3c3c':Y,fg:x.ac?Y:x.sn?Y:K,bd:x.ac?Y:x.sn?'#3c3c3c':Y};}return o;};
+    const s02=sbtn('02',2),a02={none:!act['02'],what:act['02']==='what',why:act['02']==='why',p2:this.scn('audio/vo/M04/vo-sl02-s2_v1.0.mp3')>=2};
+    const s04=sbtn('04',2),a04={none:!act['04'],r1:act['04']==='r1',r2:act['04']==='r2'};
+    const t05=stp('05',7),s05c=REQ['05'].filter(k=>this.seen('05',k)).length;
+    // SL-19: baris fungsi = kotak garis utuh (gaya M02 SL-08) melebar ke tahap yang dicakup; tahap yang dicakup menyala warna fungsi.
+    const a19=act['19'],span=a19?R19.find(r=>r[0]===a19):null,t19=stp('19',4);
+    const c19={on:this.seen('19','pmd'),hint:!this.seen('19','pmd')};
+    for(let i=0;i<7;i++){const on=span&&i+1>=span[1]&&i+1<=span[2];c19[i+1]={dl:on?((i+1-span[1])*0.12).toFixed(2):0,bg:on?span[3]:'#2b2b2b',fg:on?K:'#a8a8a8'};}
+    const s19g=Array.from({length:8},(_,i)=>({x:i===7?1240:colL(i)}));
+    const f19={};R19.forEach((r,j)=>{const t=t19[j+1],sn=t.sn,ac=t.ac,x=sn?colL(r[1]-1):40,w=sn?colL(r[2]-1)+COLW-colL(r[1]-1):480;
+      f19[r[0]]={x,w,go:t.go,op:t.op,pe:t.pe,anim:t.anim,ar:sn?'none':'inline',bs:sn?'solid':'dashed',bd:sn?r[3]:t.hint?Y:'#6f6f6f',bg:ac?r[3]:sn?'#2b2b2b':'transparent',fg:ac?K:sn?'#fff':Y,sh:sn&&!ac?'inset 6px 0 0 '+r[3]:'none'};});
+    // SL-21: perspektif muncul satu per satu; panah dua arah diagonal setelah keempat perspektif terbuka (revisi #11).
+    const a21k=act['21'],all4=BSC4.every(k=>this.seen('21',k));
+    const n21=BSC4.findIndex(k=>!this.seen('21',k)),lim21=n21<0?4:n21;
+    const p21={},c21={};BSC4.forEach((k,i)=>{const s=this.st('21',k),a=s==='active',sn=s!=='normal',vis=i<=lim21;
+      p21[k]={di:vis?'1':'0',op:vis?1:0,pe:vis?'auto':'none',ty:vis?0:12,anim:this.pulse('21',k),go:()=>this.visit('21',k),bg:a?Y:sn?'#3c3c3c':'#2b2b2b',bd:sn?Y:'#5a5a5a',tc:a?K:sn?'#fff':Y,ec:a?'#7a5400':'#a8a8a8'};
+      c21[k]={op:vis?1:0,bg:a21k===k||a21k==='vs'?Y:this.seen('21',k)?'#7a5400':'#3a3a3a'};});
+    const vsOn=a21k==='vs';
+    const h21={bg:vsOn?Y:K,fg:vsOn?K:Y,cur:all4?'pointer':'default',anim:all4&&!this.seen('21','vs')&&!vl?PULSE:'none',go:()=>{if(all4)this.visit('21','vs');}};
+    const a21={none:!a21k,fin:a21k==='fin',cus:a21k==='cus',int:a21k==='int',lg:a21k==='lg',vs:vsOn,arr:all4,h1:!all4,h2:all4&&!this.seen('21','vs'),h3:this.seen('21','vs')};
+    const d21={};REQ['21'].forEach(k=>d21[k]=this.seen('21',k)?Y:'transparent');
+    const s22c=REQ['22'].filter(k=>this.seen('22',k)).length;
+    const n22=this.nx('22'),n22i=n22?+n22-1:99;
+    const k22={};for(let i=0;i<6;i++){const key=String(i+1),sn=this.seen('22',key),lk=i>n22i;
+      k22[i+1]={op:lk?0.4:1,pe:lk?'none':'auto',seen:sn,unseen:!sn,cc:sn?'#a8a8a8':Y,bg:sn?'#3c3c3c':'#2b2b2b',top:sn?Y:'#5a5a5a',anim:this.pulse('22',key),
+        go:()=>this.visit('22',key,()=>{clearTimeout(this.tLayer);this.tLayer=null;return {modal:{t:'kpi',n:i},modalOut:false};})};}
+    const pbs=k=>{const s=this.st('23',k);const o=s==='active'?{bg:K,fg:Y,bd:Y}:s==='visited'?{bg:'#3c3c3c',fg:Y,bd:'#3c3c3c'}:{bg:Y,fg:K,bd:Y};return {...o,anim:this.pulse('23',k),onClick:()=>this.visit('23',k)};};
+    const a23=act['23'];
+    const s23b=PH.map(p=>({col:p[1],c:a23===p[0]?Y:this.seen('23',p[0])?'#7a5400':'transparent'}));
+    const n23={};for(let i=0;i<7;i++){const ph=PH.find(p=>p[2].includes(i)),sn=this.seen('23',ph[0]),on=a23===ph[0];
+      n23[i+1]={ac:sn?Y:'#5a5a5a',bg:sn&&i===5?'#C8442E':on?Y:sn?'#3c3c3c':'#2b2b2b',bd:sn&&i===5?'#C8442E':on||sn?Y:'#5a5a5a',fg:sn&&i===5?'#fff':on?K:sn?Y:'#6f6f6f',op:sn?1:0,ty:sn?0:10,dl:sn?(ph[2].indexOf(i)*0.15):0};}
+    const role=k=>({anim:this.pulse('24',k),go:()=>this.visit('24',k,()=>{clearTimeout(this.tLayer);this.tLayer=null;return {modal:{t:'role',k},modalOut:false};})});
+    const t27=stp('27',1)[1],sh27=act['27']==='act',j27=this.scn('audio/vo/M04/vo-sl27-j_v1.0.mp3');
+    const s27={hidden:!sh27,shown:sh27,a1:sh27&&j27>=2,a2:sh27&&j27>=3,bg:sh27?Y:K,fg:sh27?K:Y,pe:t27.pe,anim:t27.sn?'none':t27.anim,go:t27.go};
+    const a28k=act['28']||'t1';
+    const t28={};['t1','t2'].forEach(k=>{const s=a28k===k?'active':this.seen('28',k)?'visited':'normal';const o=s==='active'?{bg:Y,fg:K,bd:Y}:s==='visited'?{bg:'#3c3c3c',fg:Y,bd:'#3c3c3c'}:{bg:'#3a3a3a',fg:Y,bd:Y};t28[k]={...o,mk:s==='normal',anim:this.pulse('28',k),go:()=>this.visit('28',k)};});
+    const a28={t1:a28k==='t1',t2:a28k==='t2',hint:!this.seen('28','t2')};
+    const m={kpi:!!modal&&modal.t==='kpi',role:!!modal&&modal.t==='role',glos:!!modal&&modal.t==='glos',help:!!modal&&modal.t==='help',out:this.state.modalOut?'1':'0'};
+    const mk={},mr={lead:m.role&&modal.k==='lead',emp:m.role&&modal.k==='emp'};for(let n=1;n<=6;n++)mk['k'+n]=m.kpi&&modal.n===n-1;
+    // Next seragam (B3) & hanya setelah VO slide + item wajib + klip tahap (C6/C9): elemen Next baru dipasang saat nextOn (animasi stdNext + 2 denyut).
+    const ok=this.nextOn(this.state),last=idx===SL.length-1;
+    const nav={prev:idx>0&&!this.state.hub,next:idx>0&&!last&&!this.state.hub&&ok};
+    const bar=this.state.embed||this.props.showReview===false;
+    const cf=this.cueFree(),cn=cf?99:this.state.cue,cu={},vlock=!cf&&this.state.vlock?'1':'0';for(let n=1;n<=9;n++)cu['c'+n]=cn>=n;
+    return {wrapRef:this.wrapRef,cu,vlock,is,s02,a02,s04,a04,t05,s05c,c19,s19g,f19,p21,c21,h21,a21,d21,k22,s22c,p23b:pbs('b'),p23m:pbs('m'),p23e:pbs('e'),s23b,n23,
+      s23cal:act['23']==='e',s23h:!this.seen('23','e'),r24l:role('lead'),r24e:role('emp'),s27,t28,a28,m,mk,mr,
+      out:{s02:o1('s02'),s04:o1('s04'),s21:o1('s21'),s27:o1('s27'),s28:o1('s28')},
+      nav,
+      scale:this.state.scale,stageW:1280*this.state.scale,stageH:720*this.state.scale,screenLabel:'SL-'+code+' '+SL[idx][1],
+      next:()=>{if(this.nextOn(this.state)&&idx<SL.length-1)this.go(idx+1);},prev:()=>idx>0&&this.go(idx-1),
+      prevAny:()=>idx>0&&this.go(idx-1),nextAny:()=>idx<SL.length-1&&this.go(idx+1),jump:e=>this.go(+e.target.value),noop:()=>{},
+      closeModal:()=>this.modalClose(),openGlos:()=>this.modalOpen({t:'glos'}),openHelp:()=>this.modalOpen({t:'help'}),...this.hubVals(idx,SL.map(s=>s[0]),i=>this.go(i)),toPmdHome:()=>{if(!this.locked())this.go(0);},toMainHub:()=>this.go(0),
+      toggleMusic:()=>this.setState(s=>({music:!s.music})),musicLabel:this.state.music?'On':'Off',
+      voOn:!this.state.voMuted,voOff:!!this.state.voMuted,voMute:()=>this.voToggle(),volLeft:Math.round(this.state.vol*208),
+      onVol:e=>{const r=e.currentTarget.getBoundingClientRect();this.setState({vol:Math.min(1,Math.max(0,(e.clientX-r.left)/r.width))});},
+      glosC:m.glos?'#fff':Y,glosS:m.glos?'inset 0 -2px 0 '+Y:'none',helpC:m.help?'#fff':Y,helpS:m.help?'inset 0 -2px 0 '+Y:'none',
+      showReview:!bar,idx:String(idx),slideOpts:SL.map((s,i)=>({v:String(i),sel:i===idx,l:'SL-'+s[0]+' · '+s[1]})),pos:(idx+1)+' / '+SL.length,
+      lockTxt:last?(this.done(code)?'Interaction complete':'Last slide'):ok?(REQ[code]?'Interaction complete — Next unlocked':'Static slide — Next after VO'):(REQ[code]?'Next locked until every item is opened and the VO has finished':'Next appears when the VO has finished'),lockC:ok||last?'#8FC46A':'#E4795F'};
+  }
+}
+HRF.mix(Component);
+</script>
+<div id="rotateHint" style="display:none;position:fixed;left:0;right:0;top:0;z-index:99999;padding:10px 14px;background:#FBB929;color:#171717;font:600 14px/1.3 Arial,sans-serif;text-align:center">Rotate your phone to landscape for the best view</div>
+<style>@media (max-width:700px) and (orientation:portrait){#rotateHint{display:block!important}}</style>
+</body>
+</html>

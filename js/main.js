@@ -87,7 +87,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': 
 async function loadProjects() {
   const list = [];
   try {
-    const r = await fetch('projects.json?v=4', { cache: 'no-cache' });
+    const r = await fetch('projects.json?v=7', { cache: 'no-cache' });
     if (r.ok) list.push(...await r.json());
   } catch (e) {}
   try {
@@ -96,7 +96,7 @@ async function loadProjects() {
       const repos = await r.json();
       repos.filter(x => !x.fork && (x.topics || []).includes(GITHUB_TOPIC)).forEach(x => {
         if (list.some(p => (p.repo || '').toLowerCase() === x.html_url.toLowerCase())) return;
-        list.push({ title: x.name.replace(/[-_]/g, ' '), description: x.description || 'Belum ada deskripsi.',
+        list.push({ title: x.name.replace(/[-_]/g, ' '), description: x.description || 'No description yet.',
           tags: [x.language, ...(x.topics || []).filter(t => t !== GITHUB_TOPIC)].filter(Boolean),
           repo: x.html_url, demo: x.homepage || '' });
       });
@@ -118,31 +118,33 @@ function tilt(card) {
 (async function render() {
   const grid = $('#projectGrid');
   const items = await loadProjects();
-  if (!items.length) { grid.innerHTML = '<p class="muted">Belum ada project. Tambahkan di projects.json atau beri topic "portfolio" pada repo GitHub.</p>'; return; }
+  if (!items.length) { grid.innerHTML = '<p class="muted">No projects yet. Add one in projects.json or give a GitHub repo the topic "portfolio".</p>'; return; }
   const safeUrl = u => /^(https?:\/\/|demo\/)/i.test(u || '') ? esc(u) : '';
   grid.innerHTML = items.map((p, i) => {
     const links = [...(p.links || [])];
     if (p.demo) links.push({ label: 'Demo', url: p.demo });
-    if (p.repo) links.push({ label: 'Kode', url: p.repo });
+    if (p.repo) links.push({ label: 'Code', url: p.repo });
     return `
     <article class="card">
-      <div class="card-img ${p.sample ? 'sim-cta' : ''}" data-i="${i}" ${p.image || p.sample ? 'role="button" tabindex="0" aria-label="' + (p.sample ? 'Coba simulasi' : 'Buka galeri') + '"' : ''}>${p.sample ? (p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}"><div class="play-badge">▶ Coba simulasi</div>` : '<div class="play">▶</div><span>Coba simulasi</span>') : p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}">` : esc((p.title || '?')[0].toUpperCase())}</div>
+      <div class="card-img ${p.sample ? 'sim-cta' : ''}" data-i="${i}" ${p.image || p.sample ? 'role="button" tabindex="0" aria-label="' + (p.sample ? 'Try simulations' : 'Open gallery') + '"' : ''}>${p.sample ? (p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}"><div class="play-badge">▶ Try simulations</div>` : '<div class="play">▶</div><span>Try simulations</span>') : p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}">` : esc((p.title || '?')[0].toUpperCase())}</div>
       <div class="card-body">
         ${p.org ? `<small class="org">${esc(p.org)}</small>` : ''}
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.description)}</p>
         <div class="tags">${(p.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
         <div class="card-links">
-          ${p.sample ? `<button type="button" data-sample="${i}">▶ Coba simulasi</button>` : ''}
+          ${p.sample ? `<button type="button" data-sample="${i}">▶ Try simulations</button>` : ''}
+          ${p.deck ? `<button type="button" data-deck="${i}">▶ ${esc(p.deck.label)}</button>` : ''}
           ${links.filter(l => safeUrl(l.url)).map(l => `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('')}
         </div>
       </div>
     </article>`;
   }).join('');
   $$('.card', grid).forEach(tilt);
+  $$('button[data-deck]', grid).forEach(b => b.addEventListener('click', () => { const p = items[+b.dataset.deck]; openLightbox(p.deck.images, p.title, [], [], p.deck.captions); }));
   $$('button[data-sample]', grid).forEach(b => b.addEventListener('click', () => window.openSample(items[+b.dataset.sample].sample)));
   $$('.card-img[data-i]', grid).forEach(el => {
-    const open = () => { const p = items[+el.dataset.i]; if (p.sample) window.openSample(p.sample); else if (p.image) openLightbox(p.gallery?.length ? p.gallery : [p.image], p.title, p.links || []); };
+    const open = () => { const p = items[+el.dataset.i]; if (p.sample) window.openSample(p.sample); else if (p.image) openLightbox(p.gallery?.length ? p.gallery : [p.image], p.title, p.links || [], p.hotspots || []); };
     el.addEventListener('click', open);
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
@@ -151,17 +153,18 @@ function tilt(card) {
   ScrollTrigger.refresh();
 })();
 
-// ====== Lightbox galeri ======
+// ====== Lightbox gallery (with clickable hotspots) ======
 const lb = $('#lightbox'), lbImg = $('#lbImg'), lbCount = $('#lbCount');
-let lbList = [], lbIdx = 0, lbTitle = '';
+let lbList = [], lbIdx = 0, lbTitle = '', lbHot = [], lbCaps = [];
 function showLb() {
   lbImg.src = lbList[lbIdx]; lbImg.alt = `${lbTitle} ${lbIdx + 1}`;
-  lbCount.textContent = `${lbTitle} · ${lbIdx + 1}/${lbList.length}`;
+  lbCount.textContent = `${lbTitle} · ${lbIdx + 1}/${lbList.length}` + (lbCaps[lbIdx] ? ` — ${lbCaps[lbIdx]}` : '');
+  $('#lbHot').innerHTML = lbIdx === 0 ? lbHot.filter(h => /^https?:/i.test(h.url || '')).map(h => `<a class="hot" href="${esc(h.url)}" target="_blank" rel="noopener" aria-label="${esc(h.label || 'Open link')}" title="${esc(h.label || 'Open link')}" style="left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%"></a>`).join('') : '';
   const multi = lbList.length > 1;
   $('#lbPrev').style.display = $('#lbNext').style.display = multi ? '' : 'none';
 }
-function openLightbox(list, title, links = []) {
-  lbList = list; lbIdx = 0; lbTitle = title; showLb();
+function openLightbox(list, title, links = [], hotspots = [], captions = []) {
+  lbList = list; lbIdx = 0; lbTitle = title; lbHot = hotspots; lbCaps = captions; showLb();
   let lk = $('#lbLinks');
   if (!lk) { lk = document.createElement('div'); lk.id = 'lbLinks'; lk.className = 'lb-links'; lb.appendChild(lk); }
   lk.innerHTML = links.filter(l => /^https?:\/\//i.test(l.url || '')).map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('');
@@ -173,7 +176,7 @@ const step = d => { lbIdx = (lbIdx + d + lbList.length) % lbList.length; showLb(
 $('#lbClose').addEventListener('click', closeLb);
 $('#lbPrev').addEventListener('click', () => step(-1));
 $('#lbNext').addEventListener('click', () => step(1));
-lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+lb.addEventListener('click', e => { if (e.target === lb || e.target.id === 'lbStage') closeLb(); });
 addEventListener('keydown', e => {
   if (lb.hidden) return;
   if (e.key === 'Escape') closeLb();

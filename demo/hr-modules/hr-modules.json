@@ -1,0 +1,70 @@
+{
+  "modules": [
+    {
+      "id": "01",
+      "no": "01",
+      "code": "OD",
+      "name": "Organization Design",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "02",
+      "no": "02",
+      "code": "RM",
+      "name": "Reward Management",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "03",
+      "no": "03",
+      "code": "RO",
+      "name": "Recruitment & Onboarding",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "04",
+      "no": "04",
+      "code": "PMD",
+      "name": "Performance Management & Development",
+      "ready": true,
+      "files": {
+        "mockup": "pmd.html"
+      }
+    },
+    {
+      "id": "05",
+      "no": "05",
+      "code": "TM",
+      "name": "Talent Management",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "06",
+      "no": "06",
+      "code": "LD",
+      "name": "Learning & Development",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "07",
+      "no": "07",
+      "code": "IR",
+      "name": "Industrial Relation",
+      "ready": false,
+      "files": {}
+    },
+    {
+      "id": "08",
+      "no": "08",
+      "code": "EM",
+      "name": "Exit Management",
+      "ready": false,
+      "files": {}
+    }
+  ]
+}

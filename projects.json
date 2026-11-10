@@ -2,109 +2,87 @@
   {
     "title": "Interactive HR Learning Mockups",
     "org": "PT Trakindo Utama · 2026",
-    "description": "Mockup interaktif seri \"HR Function for Non-HR Leader\": 8 modul dan 100+ slide dengan interaksi klik berurutan, drag-and-drop, peta, dan timeline simulasi. Materi asli bersifat internal, jadi simulasi di sini adalah contoh buatan sendiri dengan konten umum.",
-    "tags": [
-      "Articulate Storyline",
-      "SCORM 1.2",
-      "Interaction Design"
-    ],
+    "description": "Interactive mockups for the \"HR Function for Non-HR Leader\" series: 8 modules and 100+ slides with click-through sequences, drag-and-drop, maps and simulation timelines. Open the complete Performance Management module, or try self-made sample interactions that use generic content.",
+    "tags": ["Articulate Storyline", "SCORM 1.2", "Interaction Design"],
     "image": "assets/img/cover-hr.jpg",
-    "gallery": [],
-    "links": [],
-    "sample": "hr"
+    "sample": "hr",
+    "links": [
+      { "label": "Full module (interactive)", "url": "demo/hr-modules/pmd.html#SL-01&embed" },
+      { "label": "Full module (with narration)", "url": "demo/hr-modules/pmd.html#SL-01" }
+    ]
   },
   {
     "title": "KEPO Instagram Reels",
     "org": "BTPN Syariah · Jul – Nov 2025",
-    "description": "Reel pembelajaran singkat untuk akun Instagram HC Learning BTPN Syariah: naskah, pengambilan gambar, desain cover, dan tampil sebagai talent. Seri kepribadian dan berpikir kritis.",
-    "tags": [
-      "Video",
-      "Scriptwriting",
-      "Microlearning"
-    ],
+    "description": "Bite-sized learning reels for the HC Learning BTPN Syariah Instagram account: scriptwriting, filming, cover design and on-camera talent. Personality and critical-thinking series.",
+    "tags": ["Video", "Scriptwriting", "Microlearning"],
     "image": "assets/img/page10.jpg",
-    "gallery": [
-      "assets/img/page10.jpg"
-    ],
-    "links": [
-      {
-        "label": "Instagram",
-        "url": "https://www.instagram.com/kepo_duluaja/"
-      }
-    ]
+    "gallery": ["assets/img/page10.jpg"],
+    "hotspots": [{ "x": 74.8, "y": 16.4, "w": 19.2, "h": 4.6, "url": "https://www.instagram.com/kepo_duluaja/", "label": "Open Instagram" }],
+    "links": [{ "label": "Instagram", "url": "https://www.instagram.com/kepo_duluaja/" }]
   },
   {
     "title": "Training Presentation Revamp",
     "org": "BTPN Syariah · 2025 – 2026",
-    "description": "Redesain lima deck pelatihan korporat menjadi slide yang jelas, visual, dan mudah diikuti. Materi asli bersifat internal, jadi ilustrasi sebelum/sesudah di sini adalah contoh buatan sendiri.",
-    "tags": [
-      "Presentation Design",
-      "Infografis",
-      "Canva"
-    ],
+    "description": "Redesigned corporate training decks into clear, visual, easy-to-follow slides. Walk through a selection of the revamped slides, or compare a before/after redesign and try sample activities built with generic content.",
+    "tags": ["Presentation Design", "Infographics", "Canva"],
     "image": "assets/img/cover-training.jpg",
-    "gallery": [],
-    "links": [],
-    "sample": "slides"
+    "sample": "slides",
+    "deck": {
+      "label": "Full deck walkthrough",
+      "images": ["assets/img/deck-1.jpg", "assets/img/deck-2.jpg", "assets/img/deck-3.jpg", "assets/img/deck-4.jpg", "assets/img/deck-5.jpg", "assets/img/deck-6.jpg", "assets/img/deck-7.jpg"],
+      "captions": [
+        "General Training: money laundering offences infographic",
+        "General Training: online gambling map across ASEAN",
+        "General Training: online gambling player statistics",
+        "Group activity: sticky-note discussion slide",
+        "Group activity: key reminder slide with mascot",
+        "Coaching skills: common behavior patterns and their impacts",
+        "Coaching skills: role-play rounds overview"
+      ]
+    },
+    "links": []
   },
   {
     "title": "Interactive E-Module (Kotobee)",
     "org": "Universitas Negeri Jakarta · 2024",
-    "description": "E-module interaktif proyek akhir mata kuliah Learning Material Development, didesain di Canva dan diimplementasikan di Kotobee Author.",
-    "tags": [
-      "Kotobee",
-      "Canva",
-      "E-Module"
-    ],
+    "description": "Interactive e-module for the Learning Material Development course final project, designed in Canva and built in Kotobee Author.",
+    "tags": ["Kotobee", "Canva", "E-Module"],
     "image": "assets/img/page12.jpg",
-    "gallery": [
-      "assets/img/page12.jpg"
-    ],
-    "links": [
-      {
-        "label": "File & video",
-        "url": "https://drive.google.com/drive/folders/1bUzp9bj6-zAH-XiDB_j1qnVvY5BnZYJH?usp=sharing"
-      }
-    ]
+    "gallery": ["assets/img/page12.jpg"],
+    "hotspots": [{ "x": 6.1, "y": 31.0, "w": 42.6, "h": 4.9, "url": "https://drive.google.com/drive/folders/1bUzp9bj6-zAH-XiDB_j1qnVvY5BnZYJH?usp=sharing", "label": "Open files and video" }],
+    "links": [{ "label": "Files & video", "url": "https://drive.google.com/drive/folders/1bUzp9bj6-zAH-XiDB_j1qnVvY5BnZYJH?usp=sharing" }]
   },
   {
     "title": "LMS Content Design",
     "org": "Universitas Negeri Jakarta · 2024",
-    "description": "Perancangan dan pengelolaan konten satu bab mata kuliah Metodologi Penelitian di LMS, lengkap dengan formulir rincian isi LMS (proyek akhir E-Learning Design).",
-    "tags": [
-      "LMS",
-      "Content Planning",
-      "Instructional Design"
-    ],
+    "description": "Designed and managed the content of one Research Methodology chapter in the LMS, including the forms that detail what goes into the LMS (E-Learning Design final project).",
+    "tags": ["LMS", "Content Planning", "Instructional Design"],
     "image": "assets/img/page11.jpg",
-    "gallery": [
-      "assets/img/page11.jpg"
-    ],
-    "links": [
-      {
-        "label": "File desain",
-        "url": "https://drive.google.com/file/d/1-tFOG1imCnQMqv7uriPlXkkgQjPNsCxh/view?usp=sharing"
-      }
-    ]
+    "gallery": ["assets/img/page11.jpg"],
+    "hotspots": [{ "x": 6.1, "y": 34.8, "w": 19.8, "h": 4.9, "url": "https://drive.google.com/file/d/1-tFOG1imCnQMqv7uriPlXkkgQjPNsCxh/view?usp=sharing", "label": "Open design files" }],
+    "links": [{ "label": "Design files", "url": "https://drive.google.com/file/d/1-tFOG1imCnQMqv7uriPlXkkgQjPNsCxh/view?usp=sharing" }]
   },
   {
     "title": "Learning Modules & GBPP",
     "org": "Universitas Negeri Jakarta · 2023 – 2024",
-    "description": "Empat modul pembelajaran (ODL, Instructional Systems Development, Learning Material Development, Training Program Development) dan GBPP untuk SD Negeri 01 Tengah Pagi Kramat Jati.",
-    "tags": [
-      "Modul",
-      "GBPP",
-      "Learning Analysis"
-    ],
+    "description": "Four learning modules (Open and Distance Learning, Instructional Systems Development, Learning Material Development, Training Program Development) and a GBPP (instructional program outline) for SD Negeri 01 Tengah Pagi Kramat Jati.",
+    "tags": ["Modules", "GBPP", "Learning Analysis"],
     "image": "assets/img/page13.jpg",
-    "gallery": [
-      "assets/img/page13.jpg"
+    "gallery": ["assets/img/page13.jpg"],
+    "hotspots": [
+      { "x": 8.4, "y": 74.8, "w": 13, "h": 4.9, "url": "https://drive.google.com/file/d/1I-5ILc1_Uv8_5ZJDDypsyC70DGTNnUmr/view?usp=sharing", "label": "Open GBPP" },
+      { "x": 28.6, "y": 74.8, "w": 7.5, "h": 4.9, "url": "https://www.canva.com/design/DAGavsU10dA/83Ip4V-WnuXc4OXaJPF6tQ/edit", "label": "Open Module 1" },
+      { "x": 46.1, "y": 74.8, "w": 7.5, "h": 4.9, "url": "https://www.canva.com/design/DAGavoz3u14/byU9gC73GZehKsCcmCfBQw/edit", "label": "Open Module 2" },
+      { "x": 63.6, "y": 74.8, "w": 7.5, "h": 4.9, "url": "https://www.canva.com/design/DAGavhwT2IM/OuWQC4Ov2in4x21_97s_Dw/edit", "label": "Open Module 3" },
+      { "x": 81.1, "y": 74.8, "w": 7.5, "h": 4.9, "url": "https://www.canva.com/design/DAGavhsYUdM/zyR6DK0NC9mAOf0BJy2XvQ/edit", "label": "Open Module 4" }
     ],
     "links": [
-      {
-        "label": "GBPP",
-        "url": "https://drive.google.com/file/d/1I-5ILc1_Uv8_5ZJDDypsyC70DGTNnUmr/view?usp=sharing"
-      }
+      { "label": "GBPP", "url": "https://drive.google.com/file/d/1I-5ILc1_Uv8_5ZJDDypsyC70DGTNnUmr/view?usp=sharing" },
+      { "label": "Module 1", "url": "https://www.canva.com/design/DAGavsU10dA/83Ip4V-WnuXc4OXaJPF6tQ/edit" },
+      { "label": "Module 2", "url": "https://www.canva.com/design/DAGavoz3u14/byU9gC73GZehKsCcmCfBQw/edit" },
+      { "label": "Module 3", "url": "https://www.canva.com/design/DAGavhwT2IM/OuWQC4Ov2in4x21_97s_Dw/edit" },
+      { "label": "Module 4", "url": "https://www.canva.com/design/DAGavhsYUdM/zyR6DK0NC9mAOf0BJy2XvQ/edit" }
     ]
   }
 ]
